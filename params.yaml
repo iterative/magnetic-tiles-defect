@@ -14,7 +14,7 @@ data_load:
   code_names: [0, 1]
 
 data_split:
-  test_pct: 0.2
+  test_pct: 0.25
   train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
   train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
   test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
