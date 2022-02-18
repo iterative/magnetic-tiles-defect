@@ -35,16 +35,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - uses: actions/setup-python@v2
         with:
           python-version: "3.6"
-
+      - name: Install pipenv
+        run: pip install pipenv
       - name: cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          pip install pipenv
           pipenv install --dev
-          PYTHONPATH=${PWD} & pipenv run dvc repro >> report.md
+          echo "::set-env name=PYTHONPATH::$PWD"
+          pipenv run dvc repro >> report.md
           cml-send-comment report.md
