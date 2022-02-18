@@ -23,7 +23,6 @@ jobs:
           --cloud-region us-east-1 \
           --cloud-type g3s.xlarge \
           --cloud-hdd-size 64 \
-          --cloud-spot \
           --single \
           --labels=cml-runner
 
