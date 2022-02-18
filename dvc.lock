@@ -132,7 +132,7 @@ stages:
           test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
         train:
           img_size: 200
-          valid_pct: 0.2
+          valid_pct: 0.25
           learning_rate: 0.0003
           batch_size: 16
           n_epochs: 10
@@ -179,7 +179,7 @@ stages:
           metrics_file: metrics.json
         train:
           img_size: 200
-          valid_pct: 0.2
+          valid_pct: 0.25
           learning_rate: 0.0003
           batch_size: 16
           n_epochs: 10
