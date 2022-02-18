@@ -46,6 +46,5 @@ jobs:
         run: |
           pip install pipenv
           pipenv install --dev
-          PYTHONPATH=${PWD}
-          pipenv run dvc repro >> report.md
+          PYTHONPATH=${PWD} & pipenv run dvc repro >> report.md
           cml-send-comment report.md
