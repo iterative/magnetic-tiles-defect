@@ -26,22 +26,22 @@ jobs:
 
   run:
     needs: deploy-runner
-    runs-on: [self-hosted,cml-runner]
-    container: 
+    runs-on: [self-hosted, cml-runner]
+    container:
       image: docker://iterativeai/cml
       options: --gpus all
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.6'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.6"
 
-    - name: cml
-      env:
-        repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      run: |
-      pipenv install --deploy --dev
-      dvc repro > report.md
-      cml-send-comment report.md
+      - name: cml
+        env:
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          pipenv install --deploy
+          dvc repro > report.md
+          cml-send-comment report.md
