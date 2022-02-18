@@ -1,4 +1,4 @@
 outs:
-- md5: 68293adc85892cc283470936a3acbf0c
-  size: 219386869
+- md5: b3d1d0c238777193205b227aea1a62ae
+  size: 223560053
   path: model_pickle_fastai.pkl
