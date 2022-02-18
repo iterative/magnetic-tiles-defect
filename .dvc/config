@@ -1,0 +1,4 @@
+[core]
+    remote = alexkim-remote
+['remote "alexkim-remote"']
+    url = s3://alexkim-iterative-bucket/models/magnetic-tiles-defect/

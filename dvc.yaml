@@ -1,0 +1,67 @@
+stages:
+  check_packages:
+    cmd: pipenv run pip freeze > requirements.txt
+    always_changed: true
+    outs:
+      - requirements.txt
+  data_load:
+    cmd: python src/stages/data_load.py --config=params.yaml
+    deps:
+      - src/stages/data_load.py
+      - requirements.txt
+    params:
+      - base
+      - data_load
+    outs:
+      - ${data_load.data_dir}/${data_load.new_dirname}/images
+      - ${data_load.data_dir}/${data_load.new_dirname}/masks
+  data_split:
+    cmd: python src/stages/data_split.py --config=params.yaml
+    deps:
+      - src/stages/data_split.py
+      - requirements.txt
+      - ${data_load.data_dir}/${data_load.new_dirname}/images
+      - ${data_load.data_dir}/${data_load.new_dirname}/masks
+    params:
+      - base
+      - data_load
+      - data_split
+    outs:
+      - ${data_split.train_img_dir_path}
+      - ${data_split.train_mask_dir_path}
+      - ${data_split.test_img_dir_path}
+      - ${data_split.test_mask_dir_path}
+  train:
+    cmd: python src/stages/train.py --config=params.yaml
+    deps:
+      - ${data_split.train_img_dir_path}
+      - ${data_split.train_mask_dir_path}
+      - src/stages/train.py
+      - requirements.txt
+    params:
+      - base
+      - data_split
+      - train
+    outs:
+      - ${train.model_pickle_dir_path}
+    live:
+      training_metrics:
+        summary: true
+        html: true
+        cache: false
+  evaluate:
+    cmd: python src/stages/eval.py --config=params.yaml
+    deps:
+      - ${train.model_pickle_dir_path}
+      - ${data_split.test_img_dir_path}
+      - ${data_split.test_mask_dir_path}
+      - src/stages/eval.py
+      - requirements.txt
+    params:
+      - base
+      - train
+      - data_split
+      - evaluate
+    metrics:
+      - metrics.json:
+          cache: false

@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="5">
+    <title>DVC Plot</title>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
+    
+</head>
+<body>
+    <table>
+<thead>
+<tr><th>training_metrics.json                                                                                                                                                                                                                            </th></tr>
+</thead>
+<tbody>
+<tr><td>{&#x27;data&#x27;: {&#x27;step&#x27;: 12, &#x27;epoch&#x27;: 11.0, &#x27;train&#x27;: {&#x27;loss&#x27;: 0.13304944336414337}, &#x27;valid&#x27;: {&#x27;loss&#x27;: 0.08759886026382446}, &#x27;foreground&#x27;: {&#x27;acc&#x27;: 0.7780340313911438}, &#x27;jaccard&#x27;: {&#x27;coeff&#x27;: 0.6649412188872149}, &#x27;dice&#x27;: {&#x27;multi&#x27;: 0.8908413026929614}}}</td></tr>
+</tbody>
+</table>
+<br>
+
+    <div id = "plot_training_metrics_scalars_dice_multi_tsv">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {
+        "values": [
+    {
+        "dice/multi": "0.4792364430337165",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "0",
+        "timestamp": "1649272575679"
+    },
+    {
+        "dice/multi": "0.4792364430337165",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "1",
+        "timestamp": "1649272584536"
+    },
+    {
+        "dice/multi": "0.4792364430337165",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "2",
+        "timestamp": "1649272591914"
+    },
+    {
+        "dice/multi": "0.4793653574627076",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "3",
+        "timestamp": "1649272599413"
+    },
+    {
+        "dice/multi": "0.4792364430337165",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "4",
+        "timestamp": "1649272606875"
+    },
+    {
+        "dice/multi": "0.7924620309235739",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "5",
+        "timestamp": "1649272614573"
+    },
+    {
+        "dice/multi": "0.8072910583825572",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "6",
+        "timestamp": "1649272622094"
+    },
+    {
+        "dice/multi": "0.8394860811657834",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "7",
+        "timestamp": "1649272629742"
+    },
+    {
+        "dice/multi": "0.8656044123411648",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "8",
+        "timestamp": "1649272637376"
+    },
+    {
+        "dice/multi": "0.8717358998069535",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "9",
+        "timestamp": "1649272645108"
+    },
+    {
+        "dice/multi": "0.8780258100333816",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "10",
+        "timestamp": "1649272652948"
+    },
+    {
+        "dice/multi": "0.8890260580798406",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "11",
+        "timestamp": "1649272660632"
+    },
+    {
+        "dice/multi": "0.8908413026929614",
+        "filename": "training_metrics/scalars/dice/multi.tsv",
+        "rev": "workspace",
+        "step": "12",
+        "timestamp": "1649272668406"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "dice/multi",
+                    "type": "quantitative",
+                    "title": "dice/multi",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "selection": {
+                        "label": {
+                            "type": "single",
+                            "nearest": true,
+                            "on": "mouseover",
+                            "encodings": [
+                                "x"
+                            ],
+                            "empty": "none",
+                            "clear": "mouseout"
+                        }
+                    },
+                    "mark": "point",
+                    "encoding": {
+                        "opacity": {
+                            "condition": {
+                                "selection": "label",
+                                "value": 1
+                            },
+                            "value": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "label"
+                    }
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "gray"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "encoding": {
+                        "text": {
+                            "type": "quantitative",
+                            "field": "dice/multi"
+                        },
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        },
+                        "y": {
+                            "field": "dice/multi",
+                            "type": "quantitative"
+                        }
+                    },
+                    "layer": [
+                        {
+                            "mark": {
+                                "type": "text",
+                                "align": "left",
+                                "dx": 5,
+                                "dy": -5
+                            },
+                            "encoding": {
+                                "color": {
+                                    "type": "nominal",
+                                    "field": "rev"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#plot_training_metrics_scalars_dice_multi_tsv', spec);
+        </script>
+    </div>
+    
+
+    <div id = "plot_training_metrics_scalars_epoch_tsv">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {
+        "values": [
+    {
+        "epoch": "0.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "0",
+        "timestamp": "1649272575639"
+    },
+    {
+        "epoch": "0.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "1",
+        "timestamp": "1649272584467"
+    },
+    {
+        "epoch": "1.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "2",
+        "timestamp": "1649272591847"
+    },
+    {
+        "epoch": "2.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "3",
+        "timestamp": "1649272599351"
+    },
+    {
+        "epoch": "3.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "4",
+        "timestamp": "1649272606811"
+    },
+    {
+        "epoch": "4.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "5",
+        "timestamp": "1649272614489"
+    },
+    {
+        "epoch": "5.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "6",
+        "timestamp": "1649272622024"
+    },
+    {
+        "epoch": "6.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "7",
+        "timestamp": "1649272629669"
+    },
+    {
+        "epoch": "7.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "8",
+        "timestamp": "1649272637304"
+    },
+    {
+        "epoch": "8.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "9",
+        "timestamp": "1649272645044"
+    },
+    {
+        "epoch": "9.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "10",
+        "timestamp": "1649272652865"
+    },
+    {
+        "epoch": "10.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "11",
+        "timestamp": "1649272660568"
+    },
+    {
+        "epoch": "11.0",
+        "filename": "training_metrics/scalars/epoch.tsv",
+        "rev": "workspace",
+        "step": "12",
+        "timestamp": "1649272668338"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "selection": {
+                        "label": {
+                            "type": "single",
+                            "nearest": true,
+                            "on": "mouseover",
+                            "encodings": [
+                                "x"
+                            ],
+                            "empty": "none",
+                            "clear": "mouseout"
+                        }
+                    },
+                    "mark": "point",
+                    "encoding": {
+                        "opacity": {
+                            "condition": {
+                                "selection": "label",
+                                "value": 1
+                            },
+                            "value": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "label"
+                    }
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "gray"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "encoding": {
+                        "text": {
+                            "type": "quantitative",
+                            "field": "epoch"
+                        },
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        },
+                        "y": {
+                            "field": "epoch",
+                            "type": "quantitative"
+                        }
+                    },
+                    "layer": [
+                        {
+                            "mark": {
+                                "type": "text",
+                                "align": "left",
+                                "dx": 5,
+                                "dy": -5
+                            },
+                            "encoding": {
+                                "color": {
+                                    "type": "nominal",
+                                    "field": "rev"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#plot_training_metrics_scalars_epoch_tsv', spec);
+        </script>
+    </div>
+    
+
+    <div id = "plot_training_metrics_scalars_foreground_acc_tsv">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {
+        "values": [
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.0",
+        "rev": "workspace",
+        "step": "0",
+        "timestamp": "1649272575662"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.0",
+        "rev": "workspace",
+        "step": "1",
+        "timestamp": "1649272584510"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.0",
+        "rev": "workspace",
+        "step": "2",
+        "timestamp": "1649272591885"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "7.641284901183099e-05",
+        "rev": "workspace",
+        "step": "3",
+        "timestamp": "1649272599389"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.0",
+        "rev": "workspace",
+        "step": "4",
+        "timestamp": "1649272606850"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.7282220125198364",
+        "rev": "workspace",
+        "step": "5",
+        "timestamp": "1649272614548"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.5008761882781982",
+        "rev": "workspace",
+        "step": "6",
+        "timestamp": "1649272622072"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.6286842823028564",
+        "rev": "workspace",
+        "step": "7",
+        "timestamp": "1649272629718"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.8452015519142151",
+        "rev": "workspace",
+        "step": "8",
+        "timestamp": "1649272637353"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.7383719682693481",
+        "rev": "workspace",
+        "step": "9",
+        "timestamp": "1649272645086"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.7216418981552124",
+        "rev": "workspace",
+        "step": "10",
+        "timestamp": "1649272652922"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.7749849557876587",
+        "rev": "workspace",
+        "step": "11",
+        "timestamp": "1649272660607"
+    },
+    {
+        "filename": "training_metrics/scalars/foreground/acc.tsv",
+        "foreground/acc": "0.7780340313911438",
+        "rev": "workspace",
+        "step": "12",
+        "timestamp": "1649272668380"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "foreground/acc",
+                    "type": "quantitative",
+                    "title": "foreground/acc",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "selection": {
+                        "label": {
+                            "type": "single",
+                            "nearest": true,
+                            "on": "mouseover",
+                            "encodings": [
+                                "x"
+                            ],
+                            "empty": "none",
+                            "clear": "mouseout"
+                        }
+                    },
+                    "mark": "point",
+                    "encoding": {
+                        "opacity": {
+                            "condition": {
+                                "selection": "label",
+                                "value": 1
+                            },
+                            "value": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "label"
+                    }
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "gray"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "encoding": {
+                        "text": {
+                            "type": "quantitative",
+                            "field": "foreground/acc"
+                        },
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        },
+                        "y": {
+                            "field": "foreground/acc",
+                            "type": "quantitative"
+                        }
+                    },
+                    "layer": [
+                        {
+                            "mark": {
+                                "type": "text",
+                                "align": "left",
+                                "dx": 5,
+                                "dy": -5
+                            },
+                            "encoding": {
+                                "color": {
+                                    "type": "nominal",
+                                    "field": "rev"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#plot_training_metrics_scalars_foreground_acc_tsv', spec);
+        </script>
+    </div>
+    
+
+    <div id = "plot_training_metrics_scalars_jaccard_coeff_tsv">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {
+        "values": [
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.0",
+        "rev": "workspace",
+        "step": "0",
+        "timestamp": "1649272575671"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.0",
+        "rev": "workspace",
+        "step": "1",
+        "timestamp": "1649272584522"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.0",
+        "rev": "workspace",
+        "step": "2",
+        "timestamp": "1649272591900"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.00012641457914058313",
+        "rev": "workspace",
+        "step": "3",
+        "timestamp": "1649272599400"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.0",
+        "rev": "workspace",
+        "step": "4",
+        "timestamp": "1649272606862"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.4541601804297464",
+        "rev": "workspace",
+        "step": "5",
+        "timestamp": "1649272614561"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.47041848347234533",
+        "rev": "workspace",
+        "step": "6",
+        "timestamp": "1649272622082"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.5404528470883697",
+        "rev": "workspace",
+        "step": "7",
+        "timestamp": "1649272629732"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.6066296092980307",
+        "rev": "workspace",
+        "step": "8",
+        "timestamp": "1649272637366"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.6169360338243317",
+        "rev": "workspace",
+        "step": "9",
+        "timestamp": "1649272645097"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.631579878542331",
+        "rev": "workspace",
+        "step": "10",
+        "timestamp": "1649272652935"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.6603048041554082",
+        "rev": "workspace",
+        "step": "11",
+        "timestamp": "1649272660619"
+    },
+    {
+        "filename": "training_metrics/scalars/jaccard/coeff.tsv",
+        "jaccard/coeff": "0.6649412188872149",
+        "rev": "workspace",
+        "step": "12",
+        "timestamp": "1649272668394"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "jaccard/coeff",
+                    "type": "quantitative",
+                    "title": "jaccard/coeff",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "selection": {
+                        "label": {
+                            "type": "single",
+                            "nearest": true,
+                            "on": "mouseover",
+                            "encodings": [
+                                "x"
+                            ],
+                            "empty": "none",
+                            "clear": "mouseout"
+                        }
+                    },
+                    "mark": "point",
+                    "encoding": {
+                        "opacity": {
+                            "condition": {
+                                "selection": "label",
+                                "value": 1
+                            },
+                            "value": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "label"
+                    }
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "gray"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "encoding": {
+                        "text": {
+                            "type": "quantitative",
+                            "field": "jaccard/coeff"
+                        },
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        },
+                        "y": {
+                            "field": "jaccard/coeff",
+                            "type": "quantitative"
+                        }
+                    },
+                    "layer": [
+                        {
+                            "mark": {
+                                "type": "text",
+                                "align": "left",
+                                "dx": 5,
+                                "dy": -5
+                            },
+                            "encoding": {
+                                "color": {
+                                    "type": "nominal",
+                                    "field": "rev"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#plot_training_metrics_scalars_jaccard_coeff_tsv', spec);
+        </script>
+    </div>
+    
+
+    <div id = "plot_training_metrics_scalars_train_loss_tsv">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {
+        "values": [
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "0",
+        "timestamp": "1649272575646",
+        "train/loss": "0.44642335176467896"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "1",
+        "timestamp": "1649272584481",
+        "train/loss": "0.3665539026260376"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "2",
+        "timestamp": "1649272591860",
+        "train/loss": "0.35317757725715637"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "3",
+        "timestamp": "1649272599364",
+        "train/loss": "0.32065263390541077"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "4",
+        "timestamp": "1649272606824",
+        "train/loss": "0.32613301277160645"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "5",
+        "timestamp": "1649272614506",
+        "train/loss": "0.28459447622299194"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "6",
+        "timestamp": "1649272622037",
+        "train/loss": "0.2525844871997833"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "7",
+        "timestamp": "1649272629687",
+        "train/loss": "0.22846190631389618"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "8",
+        "timestamp": "1649272637321",
+        "train/loss": "0.20268471539020538"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "9",
+        "timestamp": "1649272645057",
+        "train/loss": "0.18235905468463898"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "10",
+        "timestamp": "1649272652883",
+        "train/loss": "0.16211357712745667"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "11",
+        "timestamp": "1649272660582",
+        "train/loss": "0.14558739960193634"
+    },
+    {
+        "filename": "training_metrics/scalars/train/loss.tsv",
+        "rev": "workspace",
+        "step": "12",
+        "timestamp": "1649272668354",
+        "train/loss": "0.13304944336414337"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "train/loss",
+                    "type": "quantitative",
+                    "title": "train/loss",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "selection": {
+                        "label": {
+                            "type": "single",
+                            "nearest": true,
+                            "on": "mouseover",
+                            "encodings": [
+                                "x"
+                            ],
+                            "empty": "none",
+                            "clear": "mouseout"
+                        }
+                    },
+                    "mark": "point",
+                    "encoding": {
+                        "opacity": {
+                            "condition": {
+                                "selection": "label",
+                                "value": 1
+                            },
+                            "value": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "label"
+                    }
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "gray"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "encoding": {
+                        "text": {
+                            "type": "quantitative",
+                            "field": "train/loss"
+                        },
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        },
+                        "y": {
+                            "field": "train/loss",
+                            "type": "quantitative"
+                        }
+                    },
+                    "layer": [
+                        {
+                            "mark": {
+                                "type": "text",
+                                "align": "left",
+                                "dx": 5,
+                                "dy": -5
+                            },
+                            "encoding": {
+                                "color": {
+                                    "type": "nominal",
+                                    "field": "rev"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#plot_training_metrics_scalars_train_loss_tsv', spec);
+        </script>
+    </div>
+    
+
+    <div id = "plot_training_metrics_scalars_valid_loss_tsv">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "data": {
+        "values": [
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "0",
+        "timestamp": "1649272575654",
+        "valid/loss": "0.4924042522907257"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "1",
+        "timestamp": "1649272584497",
+        "valid/loss": "0.3652290105819702"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "2",
+        "timestamp": "1649272591874",
+        "valid/loss": "0.3157144784927368"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "3",
+        "timestamp": "1649272599378",
+        "valid/loss": "0.33354538679122925"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "4",
+        "timestamp": "1649272606836",
+        "valid/loss": "0.2215079367160797"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "5",
+        "timestamp": "1649272614528",
+        "valid/loss": "0.1831340193748474"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "6",
+        "timestamp": "1649272622059",
+        "valid/loss": "0.14160841703414917"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "7",
+        "timestamp": "1649272629705",
+        "valid/loss": "0.14402908086776733"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "8",
+        "timestamp": "1649272637339",
+        "valid/loss": "0.11139050126075745"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "9",
+        "timestamp": "1649272645073",
+        "valid/loss": "0.09976826608181"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "10",
+        "timestamp": "1649272652904",
+        "valid/loss": "0.09229696542024612"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "11",
+        "timestamp": "1649272660594",
+        "valid/loss": "0.08843524008989334"
+    },
+    {
+        "filename": "training_metrics/scalars/valid/loss.tsv",
+        "rev": "workspace",
+        "step": "12",
+        "timestamp": "1649272668369",
+        "valid/loss": "0.08759886026382446"
+    }
+]
+    },
+    "title": "",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "step",
+                    "type": "quantitative",
+                    "title": "step"
+                },
+                "y": {
+                    "field": "valid/loss",
+                    "type": "quantitative",
+                    "title": "valid/loss",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "selection": {
+                        "label": {
+                            "type": "single",
+                            "nearest": true,
+                            "on": "mouseover",
+                            "encodings": [
+                                "x"
+                            ],
+                            "empty": "none",
+                            "clear": "mouseout"
+                        }
+                    },
+                    "mark": "point",
+                    "encoding": {
+                        "opacity": {
+                            "condition": {
+                                "selection": "label",
+                                "value": 1
+                            },
+                            "value": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "label"
+                    }
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "gray"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "encoding": {
+                        "text": {
+                            "type": "quantitative",
+                            "field": "valid/loss"
+                        },
+                        "x": {
+                            "field": "step",
+                            "type": "quantitative"
+                        },
+                        "y": {
+                            "field": "valid/loss",
+                            "type": "quantitative"
+                        }
+                    },
+                    "layer": [
+                        {
+                            "mark": {
+                                "type": "text",
+                                "align": "left",
+                                "dx": 5,
+                                "dy": -5
+                            },
+                            "encoding": {
+                                "color": {
+                                    "type": "nominal",
+                                    "field": "rev"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#plot_training_metrics_scalars_valid_loss_tsv', spec);
+        </script>
+    </div>
+    
+</body>
+</html>
