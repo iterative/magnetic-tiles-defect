@@ -12,9 +12,6 @@ stages:
     params:
       - base
       - data_load
-    outs:
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/images
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
   data_split:
     cmd: python src/stages/data_split.py --config=params.yaml
     deps:

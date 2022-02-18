@@ -76,39 +76,39 @@ stages:
           - 0
           - 1
         data_split:
-          test_pct: 0.25
+          test_pct: 0.2
           train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
           train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
           test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
           test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
     outs:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
-      md5: 5d67f1f911a6369537c7cfa14a9183b9.dir
-      size: 3655378
-      nfiles: 98
+      md5: d813caa638f86c923c1750d7cdfd2d3a.dir
+      size: 3022439
+      nfiles: 78
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
-      md5: 78fd836bed9f04e3c3140455164cdb12.dir
-      size: 48847
-      nfiles: 98
+      md5: 6eb5984ba8bd91fb361dc02bf8fa2c94.dir
+      size: 41206
+      nfiles: 78
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
-      md5: eb3d30d58453ab389d75ffaab9a2054b.dir
-      size: 11011139
-      nfiles: 294
+      md5: eaea09fcb7bc4b3de58f1d9248c52782.dir
+      size: 11644078
+      nfiles: 314
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
-      md5: 543c271ca5fed4bf834ea3fc0af8bb5f.dir
-      size: 150570
-      nfiles: 294
+      md5: 690861cdc47b96f2fa071deecab74ad7.dir
+      size: 158211
+      nfiles: 314
   train:
     cmd: python src/stages/train.py --config=params.yaml
     deps:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
-      md5: eb3d30d58453ab389d75ffaab9a2054b.dir
-      size: 11011139
-      nfiles: 294
+      md5: eaea09fcb7bc4b3de58f1d9248c52782.dir
+      size: 11644078
+      nfiles: 314
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
-      md5: 543c271ca5fed4bf834ea3fc0af8bb5f.dir
-      size: 150570
-      nfiles: 294
+      md5: 690861cdc47b96f2fa071deecab74ad7.dir
+      size: 158211
+      nfiles: 314
     - path: pkg_list.txt
       md5: aa965848e4f64414ccd0e8d5505d3a8f
       size: 3437
@@ -125,7 +125,7 @@ stages:
           reports_dir_path: reports
           random_state: 42
         data_split:
-          test_pct: 0.25
+          test_pct: 0.2
           train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
           train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
           test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
@@ -135,7 +135,7 @@ stages:
           valid_pct: 0.2
           learning_rate: 0.0003
           batch_size: 16
-          n_epochs: 5
+          n_epochs: 10
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
@@ -143,13 +143,13 @@ stages:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
-      md5: 5d67f1f911a6369537c7cfa14a9183b9.dir
-      size: 3655378
-      nfiles: 98
+      md5: d813caa638f86c923c1750d7cdfd2d3a.dir
+      size: 3022439
+      nfiles: 78
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
-      md5: 78fd836bed9f04e3c3140455164cdb12.dir
-      size: 48847
-      nfiles: 98
+      md5: 6eb5984ba8bd91fb361dc02bf8fa2c94.dir
+      size: 41206
+      nfiles: 78
     - path: models/model_pickle_fastai.pkl
       md5: eb4b914aad0c53052b0b73e511ca6e37
       size: 206862325
@@ -169,7 +169,7 @@ stages:
           reports_dir_path: reports
           random_state: 42
         data_split:
-          test_pct: 0.25
+          test_pct: 0.2
           train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
           train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
           test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
@@ -182,11 +182,11 @@ stages:
           valid_pct: 0.2
           learning_rate: 0.0003
           batch_size: 16
-          n_epochs: 5
+          n_epochs: 10
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: reports/metrics.json
-      md5: 4f4b316f31ee8dddda631226512e6e08
-      size: 65
+      md5: 2b88813bcaefdd75d567e9a094e0505a
+      size: 64
