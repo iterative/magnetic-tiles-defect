@@ -1,0 +1,60 @@
+stages:
+  check_packages:
+    cmd: python src/stages/check_pkgs.py --config=params.yaml
+    always_changed: true
+    outs:
+      - pkg_list.txt
+  data_load:
+    cmd: python src/stages/data_load.py --config=params.yaml
+    deps:
+      - src/stages/data_load.py
+      - pkg_list.txt
+    params:
+      - base
+      - data_load
+    outs:
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/images
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
+  data_split:
+    cmd: python src/stages/data_split.py --config=params.yaml
+    deps:
+      - src/stages/data_split.py
+      - pkg_list.txt
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/images
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
+    params:
+      - base
+      - data_load
+      - data_split
+    outs:
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+  train:
+    cmd: python src/stages/train.py --config=params.yaml
+    deps:
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+      - src/stages/train.py
+      - pkg_list.txt
+    params:
+      - base
+      - data_split
+      - train
+  evaluate:
+    cmd: python src/stages/eval.py --config=params.yaml
+    deps:
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
+      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+      - models/model_pickle_fastai.pkl
+      - src/stages/eval.py
+      - pkg_list.txt
+    params:
+      - base
+      - train
+      - data_split
+      - evaluate
+    metrics:
+      - reports/metrics.json:
+          cache: False

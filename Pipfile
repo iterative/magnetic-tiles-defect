@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+torch = "*"
+torchvision = "*"
+fastai = "*"
+ipykernel = "*"
+ipywidgets = "*"
+fastcore = "*"
+tqdm = "*"
+notebook = "*"
+pillow = "*"
+dvc = {extras = ["s3"], version = "*"}
+fastapi = {extras = ["all"], version = "*"}
+python-box = "*"
+scikit-image = "*"
+
+[dev-packages]
+ipykernel = "*"
+autopep8 = "*"
+pylint = "*"
+bandit = "*"
+
+[requires]
+python_version = "3"
