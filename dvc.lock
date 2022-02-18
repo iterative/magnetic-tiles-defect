@@ -132,10 +132,10 @@ stages:
           test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
         train:
           img_size: 200
-          valid_pct: 0.25
+          valid_pct: 0.2
           learning_rate: 0.0003
           batch_size: 16
-          n_epochs: 10
+          n_epochs: 5
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
@@ -151,8 +151,8 @@ stages:
       size: 41206
       nfiles: 78
     - path: models/model_pickle_fastai.pkl
-      md5: ab64605e2190e1adf6fd23e158491635
-      size: 223559989
+      md5: e4adbe7cb6b49663a2dc5d5952a4ce61
+      size: 223555381
     - path: pkg_list.txt
       md5: aa965848e4f64414ccd0e8d5505d3a8f
       size: 3437
@@ -179,14 +179,14 @@ stages:
           metrics_file: metrics.json
         train:
           img_size: 200
-          valid_pct: 0.25
+          valid_pct: 0.2
           learning_rate: 0.0003
           batch_size: 16
-          n_epochs: 10
+          n_epochs: 5
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: reports/metrics.json
-      md5: 3a83bf9a2e1ecda9ebe78a7b84c7d610
+      md5: 5257c31594660354aac9ff2f1cb8ecf6
       size: 65

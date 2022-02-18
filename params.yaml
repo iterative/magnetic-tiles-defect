@@ -22,10 +22,10 @@ data_split:
 
 train:
   img_size: 200
-  valid_pct: 0.25
+  valid_pct: 0.2
   learning_rate: 0.0003
   batch_size: 16
-  n_epochs: 10
+  n_epochs: 5
   use_cpu: False
   model_pickle_dir_path: models
   model_pickle_fname: model_pickle_fastai.pkl
