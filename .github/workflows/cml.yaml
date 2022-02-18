@@ -43,8 +43,8 @@ jobs:
       - name: cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          PYTHONPATH: $PWD
         run: |
           pipenv install --dev
-          echo "::set-env name=PYTHONPATH::$PWD"
           pipenv run dvc repro >> report.md
           cml-send-comment report.md
