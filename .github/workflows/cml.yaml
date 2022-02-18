@@ -20,9 +20,11 @@ jobs:
         run: |
           cml-runner \
           --cloud aws \
-          --cloud-region us-west \
-          --cloud-type=g3.4xlarge \
+          --cloud-region us-east-1 \
+          --cloud-type=p2.xlarge \
           --cloud-hdd-size 64 \
+          --cloud-spot \
+          --single \
           --labels=cml-runner
 
   run:
@@ -43,6 +45,8 @@ jobs:
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          pipenv install --deploy
-          dvc repro > report.md
+          pip install pipenv
+          pipenv install --dev
+          echo "export PYTHONPATH=$PWD" >> $VIRTUAL_ENV/bin/activate
+          pipenv run dvc repro >> report.md
           cml-send-comment report.md
