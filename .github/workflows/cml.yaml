@@ -46,6 +46,6 @@ jobs:
         run: |
           pip install pipenv
           pipenv install --dev
-          echo "export PYTHONPATH=$PWD" >> $VIRTUAL_ENV/bin/activate
+          PYTHONPATH=${PWD}
           pipenv run dvc repro >> report.md
           cml-send-comment report.md
