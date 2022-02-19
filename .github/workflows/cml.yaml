@@ -49,7 +49,6 @@ jobs:
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         run: |
           pipenv install --dev
-          pipenv run dvc pull
           pipenv run dvc repro
           pipenv run dvc push
 
