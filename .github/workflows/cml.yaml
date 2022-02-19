@@ -42,7 +42,7 @@ jobs:
       - name: cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          PYTHONPATH: ${{ GITHUB_WORKSPACE }}
+          PYTHONPATH: $GITHUB_WORKSPACE
         run: |
           echo "My Python Path" $PYTHONPATH
           pipenv install --dev
