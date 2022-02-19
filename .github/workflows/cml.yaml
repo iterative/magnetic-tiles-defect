@@ -49,7 +49,10 @@ jobs:
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         run: |
           pipenv install --dev
+          pipenv run dvc pull
           pipenv run dvc repro
+          git status
+          dvc status
           pipenv run dvc push
 
           echo "## Metrics" >> report.md

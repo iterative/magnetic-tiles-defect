@@ -21,8 +21,8 @@ train:
   img_size: 200
   valid_pct: 0.2
   learning_rate: 0.0003
-  batch_size: 16
-  n_epochs: 10
+  batch_size: 32
+  n_epochs: 12
   use_cpu: False
   model_pickle_dir_path: models
   model_pickle_fname: model_pickle_fastai.pkl

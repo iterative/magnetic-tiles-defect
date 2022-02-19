@@ -55,7 +55,7 @@ def get_metrics(test_img_dir_path,
         if save_test_preds:
             fig, axarr = plt.subplots(1, 3)
             fig.suptitle(
-                f'Image/True/Pred. Dice={dice:.3f} Accuracy={acc:.3f} \n img_path.stem')
+                f'Image/True/Pred. Dice={dice:.3f} Accuracy={acc:.3f} \n {img_path.stem}')
             axarr[0].imshow(im_resized, cmap='gray')
             axarr[1].imshow(y_true, cmap='gray')
             axarr[2].imshow(y_pred, cmap='gray')
