@@ -45,7 +45,15 @@ jobs:
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          echo "My Python Path" $PYTHONPATH
           pipenv install --dev
-          pipenv run dvc repro >> report.md
+          pipenv run dvc repro
+          pipenv run dvc push
+
+          echo "## Metrics" >> report.md
+          dvc metrics show --md >> report.md
+          echo "## A few random test images" >> report.md
+          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
+          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
+          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
+          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
           cml-send-comment report.md

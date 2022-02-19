@@ -56,5 +56,5 @@ stages:
       - data_split
       - evaluate
     metrics:
-      - reports/metrics.json:
-          cache: False
+      - metrics.json:
+          cache: false
