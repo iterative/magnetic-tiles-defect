@@ -59,7 +59,7 @@ def get_metrics(test_img_dir_path,
             axarr[0].imshow(im_resized, cmap='gray')
             axarr[1].imshow(y_true, cmap='gray')
             axarr[2].imshow(y_pred, cmap='gray')
-            plt.savefig(test_img_out_dir/f'{img_path.stem}.jpg')
+            plt.savefig(test_img_out_dir/f'{img_path.stem}.jpg', dpi=50)
 
     dice_arr = np.array(dice_list)
     acc_arr = np.array(acc_list)

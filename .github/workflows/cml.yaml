@@ -58,8 +58,5 @@ jobs:
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
-          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
-          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
-          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
-          cml-publish data/test_preds/$(ls data/test_preds/ | shuf -n 1) --md >> report.md
+          for file in $(ls data/test_preds/ |sort -R |tail -5); do cml-publish data/test_preds/$file --md >>report.md; done
           cml-send-comment report.md
