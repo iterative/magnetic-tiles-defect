@@ -42,8 +42,8 @@ jobs:
       - name: cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          PYTHONPATH: ${{ github.workspace }}
         run: |
-          echo ::set-env name=PYTHONPATH::$GITHUB_WORKSPACE
           echo "My Python Path" $PYTHONPATH
           pipenv install --dev
           pipenv run dvc repro >> report.md
