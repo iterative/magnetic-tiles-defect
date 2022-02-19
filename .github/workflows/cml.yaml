@@ -45,9 +45,8 @@ jobs:
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          pip install awsli
-          aws s3 ls s3://alexkim-iterative-bucket/models/magnetic-tiles-defect/
           pipenv install --dev
+          pipenv run dvc pull
           pipenv run dvc repro
           pipenv run dvc push
 
