@@ -39,10 +39,11 @@ jobs:
           python-version: "3.6"
       - name: Install pipenv
         run: pip install pipenv
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=${GITHUB_WORKSPACE}:${PYTHONPATH}" >> $GITHUB_ENV
       - name: cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          PYTHONPATH: ${{ github.workspace }}
         run: |
           echo "My Python Path" $PYTHONPATH
           pipenv install --dev
