@@ -42,9 +42,9 @@ jobs:
       - name: cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          PYTHONPATH: $PWD
+          PYTHONPATH: ${{ GITHUB_WORKSPACE }}
         run: |
-          echo "github path:" $GITHUB_PATH
+          echo "My Python Path" $PYTHONPATH
           pipenv install --dev
           pipenv run dvc repro >> report.md
           cml-send-comment report.md
