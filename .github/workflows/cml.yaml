@@ -23,7 +23,6 @@ jobs:
           --cloud-region us-east-1 \
           --cloud-type g3s.xlarge \
           --cloud-hdd-size 64 \
-          --single \
           --labels=cml-runner
 
   run:
@@ -45,6 +44,7 @@ jobs:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           PYTHONPATH: $PWD
         run: |
+          echo "github path:" $GITHUB_PATH
           pipenv install --dev
           pipenv run dvc repro >> report.md
           cml-send-comment report.md
