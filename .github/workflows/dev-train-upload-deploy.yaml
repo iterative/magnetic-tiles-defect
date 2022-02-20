@@ -52,18 +52,27 @@ jobs:
         run: |
           pipenv install --dev
           pipenv run dvc pull
-          pipenv run dvc repro
+          #pipenv run dvc repro
           pipenv run dvc push
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
           for file in $(ls data/test_preds/ |sort -R |tail -20); do cml-publish data/test_preds/$file --md >>report.md; done
           cml-send-comment report.md
+      - uses: actions/upload-artifact@master
+        with:
+          name: model_pickle
+          path: $GITHUB_WORKSPACE/models/model_pickle_fastai.pkl
+
   deploy-dev-api:
     needs: train-model-and-push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@master
+        with:
+          name: model_pickle
+          path: $GITHUB_WORKSPACE/models/model_pickle_fastai.pkl
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
