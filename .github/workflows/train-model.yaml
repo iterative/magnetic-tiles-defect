@@ -28,24 +28,22 @@ jobs:
           --single \
           --cloud-hdd-size 64 \
           --labels=cml-runner
-
   train-model:
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
     container:
       image: docker://iterativeai/cml
       options: --gpus all
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: "3.6"
+          python-version: "3.x"
       - name: Install pipenv
         run: pip install pipenv
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-      - name: cml
+      - name: dvc-repro-cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

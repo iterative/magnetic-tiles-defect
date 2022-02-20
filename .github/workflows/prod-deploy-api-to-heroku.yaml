@@ -6,14 +6,41 @@ on:
       - master
 
 jobs:
-  deploy-prod-api:
+  pull-model-pickle:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      - uses: iterative/setup-cml@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: dvc-pull-model
+        env:
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        run: |
+          pipenv install --dev
+          pipenv run dvc pull models/model_pickle_fastai.pkl
+      - uses: actions/upload-artifact@master
+        with:
+          name: model_pickle
+          path: models/model_pickle_fastai.pkl
+
+  deploy-prod-api:
+    needs: pull-model-pickle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@master
+        with:
+          name: model_pickle
+          path: models/model_pickle_fastai.pkl
+      - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "mag-tiles-api-prod" #Must be unique in Heroku
+          heroku_app_name: "mag-tiles-api-prod"
           heroku_email: "alexkim@iterative.ai"
           team: "iterative-sandbox"
           usedocker: true

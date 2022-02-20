@@ -33,17 +33,16 @@ jobs:
     container:
       image: docker://iterativeai/cml
       options: --gpus all
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: "3.6"
+          python-version: "3.x"
       - name: Install pipenv
         run: pip install pipenv
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-      - name: cml
+      - name: dvc-repro-cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -52,7 +51,7 @@ jobs:
         run: |
           pipenv install --dev
           pipenv run dvc pull
-          #pipenv run dvc repro
+          pipenv run dvc repro
           pipenv run dvc push
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
@@ -73,14 +72,10 @@ jobs:
         with:
           name: model_pickle
           path: models/model_pickle_fastai.pkl
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "mag-tiles-api-dev" #Must be unique in Heroku
+          heroku_app_name: "mag-tiles-api-dev"
           heroku_email: "alexkim@iterative.ai"
           team: "iterative-sandbox"
           usedocker: true
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
