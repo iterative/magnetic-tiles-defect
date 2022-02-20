@@ -1,15 +1,18 @@
-name: train-my-model
+name: train-model
 
-on: [push]
+on:
+  push:
+    branches:    
+      - '!master'   # excludes master
+      - '!dev'   # excludes dev
+
 
 jobs:
   deploy-runner:
     runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-
       - uses: iterative/setup-cml@v1
-
       - name: deploy
         shell: bash
         env:
@@ -52,10 +55,6 @@ jobs:
           pipenv install --dev
           pipenv run dvc pull
           pipenv run dvc repro
-          git status
-          dvc status
-          pipenv run dvc push
-
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md

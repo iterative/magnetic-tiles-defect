@@ -1,0 +1,61 @@
+name: train-model-upload-to-s3
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy-runner:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - name: deploy
+        shell: bash
+        env:
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        run: |
+          cml-runner \
+          --cloud aws \
+          --cloud-region us-east-1 \
+          --cloud-type p3.2xlarge \
+          --single \
+          --cloud-hdd-size 64 \
+          --labels=cml-runner
+
+  run:
+    needs: deploy-runner
+    runs-on: [self-hosted, cml-runner]
+    container:
+      image: docker://iterativeai/cml
+      options: --gpus all
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.6"
+      - name: Install pipenv
+        run: pip install pipenv
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+      - name: cml
+        env:
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        run: |
+          pipenv install --dev
+          pipenv run dvc pull
+          pipenv run dvc repro
+          pipenv run dvc push
+          echo "## Metrics" >> report.md
+          dvc metrics show --md >> report.md
+          echo "## A few random test images" >> report.md
+          for file in $(ls data/test_preds/ |sort -R |tail -20); do cml-publish data/test_preds/$file --md >>report.md; done
+          cml-send-comment report.md
