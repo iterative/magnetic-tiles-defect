@@ -29,7 +29,7 @@ jobs:
           --cloud-hdd-size 64 \
           --labels=cml-runner
 
-  run:
+  train-model:
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
     container:

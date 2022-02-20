@@ -1,4 +1,4 @@
-name: train-model-upload-to-s3
+name: dev-train-upload-deploy
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
           --cloud-hdd-size 64 \
           --labels=cml-runner
 
-  run:
+  train-model-and-push:
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
     container:
@@ -59,3 +59,14 @@ jobs:
           echo "## A few random test images" >> report.md
           for file in $(ls data/test_preds/ |sort -R |tail -20); do cml-publish data/test_preds/$file --md >>report.md; done
           cml-send-comment report.md
+  deploy-dev-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "mag-tiles-api-dev" #Must be unique in Heroku
+          heroku_email: "alexkim@iterative.ai"
+          team: "iterative-sandbox"
+          usedocker: true

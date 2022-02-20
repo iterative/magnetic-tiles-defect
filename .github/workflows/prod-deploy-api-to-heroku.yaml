@@ -1,4 +1,4 @@
-name: deploy-to-heroku
+name: prod-deploy-api-to-heroku
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  deploy-prod-api:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,4 +15,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "mag-tiles-api-prod" #Must be unique in Heroku
           heroku_email: "alexkim@iterative.ai"
+          team: "iterative-sandbox"
           usedocker: true
