@@ -62,7 +62,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: model_pickle
-          path: $GITHUB_WORKSPACE/models/model_pickle_fastai.pkl
+          path: models/model_pickle_fastai.pkl
 
   deploy-dev-api:
     needs: train-model-and-push
@@ -72,7 +72,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: model_pickle
-          path: $GITHUB_WORKSPACE/models/model_pickle_fastai.pkl
+          path: models/model_pickle_fastai.pkl
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
