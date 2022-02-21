@@ -36,7 +36,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: model_pickle
-          path: models/model_pickle_fastai.pkl
+          path: models
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}

@@ -83,13 +83,13 @@ jobs:
         with:
           name: model_pickle
           path: models
-      # - uses: akhileshns/heroku-deploy@v3.12.12
-      #   with:
-      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-      #     heroku_app_name: "mag-tiles-api-dev"
-      #     heroku_email: "alexkim@iterative.ai"
-      #     team: "iterative-sandbox"
-      #     usedocker: true
-      - name: list-repo
-        run: |
-          ls -lR
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "mag-tiles-api-dev"
+          heroku_email: "alexkim@iterative.ai"
+          team: "iterative-sandbox"
+          usedocker: true
+      # - name: list-repo
+      #   run: |
+      #     ls -lR
