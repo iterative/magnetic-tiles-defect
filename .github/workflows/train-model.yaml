@@ -1,15 +1,18 @@
-name: train-my-model
+name: train-model
 
-on: [push]
+on:
+  push:
+    branches:    
+      - '!master'   # excludes master
+      - '!dev'   # excludes dev
+
 
 jobs:
   deploy-runner:
     runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-
       - uses: iterative/setup-cml@v1
-
       - name: deploy
         shell: bash
         env:
@@ -25,24 +28,22 @@ jobs:
           --single \
           --cloud-hdd-size 64 \
           --labels=cml-runner
-
-  run:
+  train-model:
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
     container:
       image: docker://iterativeai/cml
       options: --gpus all
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: "3.6"
+          python-version: "3.9"
       - name: Install pipenv
         run: pip install pipenv
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-      - name: cml
+      - name: dvc-repro-cml
         env:
           repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -52,10 +53,6 @@ jobs:
           pipenv install --dev
           pipenv run dvc pull
           pipenv run dvc repro
-          git status
-          dvc status
-          pipenv run dvc push
-
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
