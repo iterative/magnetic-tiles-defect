@@ -125,8 +125,8 @@ stages:
           img_size: 200
           valid_pct: 0.2
           learning_rate: 0.0003
-          batch_size: 16
-          n_epochs: 10
+          batch_size: 32
+          n_epochs: 12
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
@@ -142,8 +142,8 @@ stages:
       size: 34264
       nfiles: 78
     - path: models/model_pickle_fastai.pkl
-      md5: b3d1d0c238777193205b227aea1a62ae
-      size: 223560053
+      md5: ef23ea5144048cce62901e66c31f434a
+      size: 290326069
     - path: pkg_list.txt
       md5: aa965848e4f64414ccd0e8d5505d3a8f
       size: 3437
@@ -169,12 +169,12 @@ stages:
           img_size: 200
           valid_pct: 0.2
           learning_rate: 0.0003
-          batch_size: 16
-          n_epochs: 10
+          batch_size: 32
+          n_epochs: 12
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: metrics.json
-      md5: 203a926aed2daa0a08bc45205aeac026
+      md5: 4bbbee2373c7e9f6513379a6102b3f71
       size: 65
