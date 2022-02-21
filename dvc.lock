@@ -142,8 +142,8 @@ stages:
       size: 34264
       nfiles: 78
     - path: models/model_pickle_fastai.pkl
-      md5: ef23ea5144048cce62901e66c31f434a
-      size: 290326069
+      md5: b3d1d0c238777193205b227aea1a62ae
+      size: 223560053
     - path: pkg_list.txt
       md5: aa965848e4f64414ccd0e8d5505d3a8f
       size: 3437
@@ -176,5 +176,5 @@ stages:
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: metrics.json
-      md5: 4bbbee2373c7e9f6513379a6102b3f71
+      md5: 6cea80f232a7f5bff58ba2646bb18b5e
       size: 65
