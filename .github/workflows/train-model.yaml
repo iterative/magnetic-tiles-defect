@@ -65,6 +65,7 @@ jobs:
           pipenv run dvc repro
 
           # Add files to git and push
+          git pull
           git add metrics.json
           git commit -m "CML commit"
           git push
