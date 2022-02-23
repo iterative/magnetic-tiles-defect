@@ -1,6 +1,7 @@
 from functools import partial
 from pathlib import Path
 
+from dvclive.fastai import DvcLiveCallback
 from fastai.data.all import Normalize, RandomSplitter, get_image_files
 from fastai.vision.all import (DiceMulti, JaccardCoeff, Resize,
                                SegmentationDataLoaders, aug_transforms,
@@ -44,5 +45,5 @@ def train_model(train_img_dir_path,
         dls.device = 'cpu'
     learn = unet_learner(dls, resnet34, lr=lr, metrics=[foreground_acc,
                          JaccardCoeff, DiceMulti])
-    learn.fine_tune(n_epochs)
+    learn.fine_tune(n_epochs, cbs=[DvcLiveCallback()])
     learn.export(fname=Path(model_pickle_path).absolute())
