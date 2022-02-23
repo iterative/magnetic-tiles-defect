@@ -42,6 +42,10 @@ stages:
       - base
       - data_split
       - train
+    live:
+      dvclive:
+        summary: true
+        html: true
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
