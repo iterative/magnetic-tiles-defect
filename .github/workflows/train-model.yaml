@@ -2,9 +2,9 @@ name: train-model
 
 on:
   push:
-    branches:    
-      - '!master'   # excludes master
-      - '!dev'   # excludes dev
+    branches-ignore: # exclude master and dev below
+      - master
+      - dev
 
 
 jobs:
