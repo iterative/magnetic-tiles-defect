@@ -57,7 +57,7 @@ jobs:
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         run: |
           # Install dependencies
-          pipenv install --dev
+          pipenv install --skip-lock
 
           # Run dvc pipeline
           pipenv run dvc pull
