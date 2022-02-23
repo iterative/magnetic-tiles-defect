@@ -65,6 +65,7 @@ jobs:
           pipenv run dvc push
 
           # Add files to git and push
+          git pull
           git add dvc.lock metrics.json
           git commit -m "CML commit"
           git push
