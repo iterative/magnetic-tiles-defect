@@ -56,18 +56,25 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         run: |
+          # Install dependencies
           pipenv install --dev
+
+          # Run dvc pipeline
           pipenv run dvc pull
           pipenv run dvc repro
           pipenv run dvc push
+
+          # Add files to git and push
           git add dvc.lock metrics.json
           git commit -m "CML commit"
           git push
+
+          # Create CML report
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
           for file in $(ls data/test_preds/ |sort -R |tail -20); do cml-publish data/test_preds/$file --md >>report.md; done
-          cml-send-comment --update report.md
+          cml send-comment --update report.md
 
       - uses: actions/upload-artifact@master
         with:
