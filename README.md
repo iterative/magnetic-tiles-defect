@@ -40,6 +40,7 @@ Once we are happy with our model's performance on the experiment branch, we can 
 This would trigger a different CI/CD job that will:
 1. retrain the model with the new parameters
 2. deploy the web REST API application (that relies on the new/retrained model) to a development endpoint on Heroku
+
 Now we can test our API and assess the end-to-end performance of the overall solution.
 
 ```mermaid
