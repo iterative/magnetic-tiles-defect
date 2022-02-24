@@ -6,6 +6,9 @@
 ### The dataset is desribed in detail here: 
 https://www.researchgate.net/profile/Congying-Qiu/publication/327701995_Saliency_defect_detection_of_magnetic_tiles/links/5b9fd1bd45851574f7d25019/Saliency-defect-detection-of-magnetic-tiles.pdf
 
+<img width="897" alt="Screen Shot 2022-02-23 at 7 50 39 PM" src="https://user-images.githubusercontent.com/17241029/155436071-c16cf286-72bb-41c0-a933-944defd3f873.png">
+
+
 ### The dataset itself is hosted in this repository:
 https://github.com/abin24/Magnetic-tile-defect-datasets. (including the dot)
 
