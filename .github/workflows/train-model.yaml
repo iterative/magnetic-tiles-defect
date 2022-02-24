@@ -62,8 +62,8 @@ jobs:
 
           # Run dvc pipeline
           pipenv run dvc pull
-          pipenv run dvc repro
-
+          pipenv run dvc repro --no-commit
+          
           # Add files to git and push
           git pull
           git add metrics.json
