@@ -60,7 +60,7 @@ jobs:
           pipenv install --skip-lock
 
           # Run dvc pipeline
-          pipenv run dvc pull $DATA_PATH/images $DATA_PATH/masks
+          pipenv run dvc pull data/MAGNETIC_TILE_SURFACE_DEFECTS/images data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
           pipenv run dvc repro
           pipenv run dvc push
 
