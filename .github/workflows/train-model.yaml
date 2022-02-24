@@ -61,9 +61,9 @@ jobs:
           pipenv install --skip-lock
 
           # Run dvc pipeline
-          pipenv run dvc pull
+          pipenv run dvc pull $DATA_PATH/images $DATA_PATH/masks
           pipenv run dvc repro
-
+          
           # Add files to git and push
           git pull
           git add metrics.json
