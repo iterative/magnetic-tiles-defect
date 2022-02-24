@@ -62,7 +62,7 @@ jobs:
 
           # Run dvc pipeline
           pipenv run dvc pull data/MAGNETIC_TILE_SURFACE_DEFECTS/images data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
-          pipenv run dvc repro -f
+          pipenv run dvc repro --no-commit
           
           # Add files to git and push
           git pull
