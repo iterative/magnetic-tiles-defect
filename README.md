@@ -97,14 +97,14 @@ Once we think our experiment is ready to be run, we'll push our changes to a rem
 At this point, we can assess the results in DVC Studio and GitHub and decide what things we want to change next.
 
 ```mermaid
-flowchart LR
-A(Work on experiment branch) -->|1. Push changes| B("run exp CML workflow\n(training & reporting)")
-B --> |2. Reports, metrics, plots| C("Check results.\nAre they good?")
-C --> |3. No -> change experiment parameters | A
-C -->|4. Yes -> merge to dev branch| E[run dev CML workflow]
+flowchart TB
+A(Work on experiment branch) -->|Push changes| B("Exp CML workflow\n(training & reporting)")
+B --> |Reports,\nmetrics,\nplots| C("Check results.\nAre they good?")
+C --> |No\nchange experiment parameters | A
+C -->|Yes\nmerge to dev branch| E[Dev CML workflow]
 ```
 
-### Deployment to the development environment
+### 2. Deployment to the development environment
 
 [workflow file](.github/workflows/dev-train-upload-deploy.yaml)
 
@@ -115,11 +115,11 @@ This would trigger a different CI/CD job that will:
 Now we can test our API and assess the end-to-end performance of the overall solution.
 
 ```mermaid
-flowchart LR
+flowchart TB
 A(Dev CML workflow) --> B(Retraining) --> C(Deployment to dev and monitoring)
 ```
 
-### Deployment to the production environment
+### 3. Deployment to the production environment
 
 [workflow file](.github/workflows/prod-deploy-api-to-heroku.yaml)
 
@@ -128,6 +128,6 @@ Again, this triggers the 3rd CI/CD workflow that deploys the code from the maste
 
 
 ```mermaid
-flowchart LR
+flowchart TB
 A(Successful deployment to dev) --> B(Merge dev into master) --> C(Prod CML workflow) --> D(Deployment to prod) 
 ```
