@@ -32,7 +32,7 @@ flowchart TB
 A(git checkout dev\ngit check -b experiment) -->|Push changes| B("Exp CML workflow\n(training & reporting)")
 B --> |Reports,\nmetrics,\nplots| C("Check results.\nAre they good?")
 C --> |No\nchange experiment parameters | A
-C -->|Yes\nmerge to dev branch| D
+C -->|Yes| D(Merge to dev branch)
 ```
 
 ### 2. Deployment to the development environment
