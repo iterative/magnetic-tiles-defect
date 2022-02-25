@@ -13,41 +13,45 @@ stages:
       - base
       - data_load
     outs:
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/images
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
+      - ${data_load.data_dir}/${data_load.new_dirname}/images
+      - ${data_load.data_dir}/${data_load.new_dirname}/masks
   data_split:
     cmd: python src/stages/data_split.py --config=params.yaml
     deps:
       - src/stages/data_split.py
       - pkg_list.txt
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/images
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
+      - ${data_load.data_dir}/${data_load.new_dirname}/images
+      - ${data_load.data_dir}/${data_load.new_dirname}/masks
     params:
       - base
       - data_load
       - data_split
     outs:
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+      - ${data_split.train_img_dir_path}
+      - ${data_split.train_mask_dir_path}
+      - ${data_split.test_img_dir_path}
+      - ${data_split.test_mask_dir_path}
   train:
     cmd: python src/stages/train.py --config=params.yaml
     deps:
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+      - ${data_split.train_img_dir_path}
+      - ${data_split.train_mask_dir_path}
       - src/stages/train.py
       - pkg_list.txt
     params:
       - base
       - data_split
       - train
+    live:
+      training_metrics:
+        summary: true
+        html: true
+        cache: false
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
-      - data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
-      - models/model_pickle_fastai.pkl
+      - ${data_split.test_img_dir_path}
+      - ${data_split.test_mask_dir_path}
       - src/stages/eval.py
       - pkg_list.txt
     params:
@@ -56,5 +60,5 @@ stages:
       - data_split
       - evaluate
     metrics:
-      - reports/metrics.json:
-          cache: False
+      - metrics.json:
+          cache: false

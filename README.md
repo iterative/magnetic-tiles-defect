@@ -6,13 +6,69 @@
 ### The dataset is desribed in detail here: 
 https://www.researchgate.net/profile/Congying-Qiu/publication/327701995_Saliency_defect_detection_of_magnetic_tiles/links/5b9fd1bd45851574f7d25019/Saliency-defect-detection-of-magnetic-tiles.pdf
 
+<img width="897" alt="Screen Shot 2022-02-23 at 7 50 39 PM" src="https://user-images.githubusercontent.com/17241029/155436071-c16cf286-72bb-41c0-a933-944defd3f873.png">
+
+
 ### The dataset itself is hosted in this repository:
 https://github.com/abin24/Magnetic-tile-defect-datasets. (including the dot)
 
+## CML-based workflows in GitHub Actions
 
-## Prerequisites
+### 1. Experimentation phase
+
+[workflow file](.github/workflows/train-model.yaml)
+
+In this stage, we'll be performing all our model experiments: work on data preprocessing, change model architecture, tune hyperparameters, etc.
+Once we think our experiment is ready to be run, we'll push our changes to a remote repository (in this case, GitHub). This push will trigger a CI/CD job in GitHub Actions, which in turn will:
+1. provision an EC2 virtual machine with a GPU in AWS
+2. deploy our experiment branch to this machine
+3. rerun the entire DVC pipeline 
+4. report live metrics to DVC Studio and push a file with final metrics back to GitHub 
+
+At this point, we can assess the results in DVC Studio and GitHub and decide what things we want to change next.
+
+```mermaid
+flowchart TB
+A(git checkout dev\ngit check -b experiment) -->|Push changes| B("Exp CML workflow\n(training & reporting)")
+B --> |Reports,\nmetrics,\nplots| C("Check results.\nAre they good?")
+C --> |No\nchange experiment parameters | A
+C -->|Yes\nmerge to dev branch| D
+```
+
+### 2. Deployment to the development environment
+
+[workflow file](.github/workflows/dev-train-upload-deploy.yaml)
+
+Once we are happy with our model's performance on the experiment branch, we can merge it into the dev branch.
+This would trigger a different CI/CD job that will:
+1. retrain the model with the new parameters
+2. deploy the web REST API application (that relies on the new/retrained model) to a development endpoint on Heroku
+
+Now we can test our API and assess the end-to-end performance of the overall solution.
+
+```mermaid
+flowchart TB
+A(Dev CML workflow) --> B(Retraining) --> C(Deployment to dev and monitoring)
+```
+
+### 3. Deployment to the production environment
+
+[workflow file](.github/workflows/prod-deploy-api-to-heroku.yaml)
+
+If we've thoroughly tested and monitored our dev web API, we can merge the development branch in the master branch of our repository.
+Again, this triggers the 3rd CI/CD workflow that deploys the code from the master branch to the production API.
+
+
+```mermaid
+flowchart TB
+A(Successful deployment to dev) --> B(Merge dev into master) --> C(Prod CML workflow) --> D(Deployment to prod) 
+```
+
+## Local development setup
+
+### Prerequisites
 - pipenv
-## Setup
+### Setup
 ```bash
 pipenv shell
 pipenv install
@@ -20,19 +76,19 @@ echo "export PYTHONPATH=$PWD" >> $VIRTUAL_ENV/bin/activate
 source $VIRTUAL_ENV/bin/activate
 ```
 
-## Model Training
+### Model Training
 ```bash
 dvc repro
 ```
 
 The model will be saved in the `models/` directory
 
-## Web API serving (local)
+### Web API serving (local)
 ```bash
 uvicorn app.main:app
 ```
 
-## Web API serving (Docker)
+### Web API serving (Docker)
 Build image
 ```bash
 docker build . -t mag-tiles
@@ -43,10 +99,10 @@ Run container
 docker run -p 8000:8000 -e PORT=8000 mag-tiles
 ```
 
-## Test API 
+### Test API 
 With `curl`
 ```bash
-curl -X POST -F 'image=@<PATH_TO_IMAGE>' -v http://127.0.0.1:8000/analyze
+curl -X POST -F 'image=@data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images/exp4_num_258590.jpg' -v http://127.0.0.1:8000/analyze
 ```
 
 With python
@@ -69,7 +125,7 @@ pred = np.array(data['pred'])
 plt.imsave(f'{file_path.stem}_mask.png', pred, cmap=cm.gray)
 ```
 
-## Deploying to Heroku
+### Manual deployment to Heroku
 
 ```bash
 heroku container:login
@@ -78,4 +134,4 @@ heroku container:push --app <APP_NAME>
 heroku container:release --app <APP_NAME>
 ```
 
-Currently, the app is deployed to https://mag-tiles-api.herokuapp.com/analyze
+Currently, the dev version of the app is deployed to https://mag-tiles-api-dev.herokuapp.com/analyze

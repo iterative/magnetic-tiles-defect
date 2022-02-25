@@ -1,10 +1,7 @@
 base:
   project: defect_detection
   pkg_list_fname: pkg_list.txt
-  pickle_dir: models
-  pickle_name: export_learn_obj.pkl
-  reports_dir_path: reports
-  random_state: 42
+  random_state: 0
 
 data_load:
   dataset_url: https://github.com/abin24/Magnetic-tile-defect-datasets./archive/refs/heads/master.zip
@@ -14,7 +11,7 @@ data_load:
   code_names: [0, 1]
 
 data_split:
-  test_pct: 0.2
+  test_pct: 0.20
   train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
   train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
   test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
@@ -23,13 +20,13 @@ data_split:
 train:
   img_size: 200
   valid_pct: 0.2
-  learning_rate: 0.0003
+  learning_rate: 0.001
   batch_size: 16
-  n_epochs: 15
+  n_epochs: 10
   use_cpu: False
   model_pickle_dir_path: models
   model_pickle_fname: model_pickle_fastai.pkl
 
 evaluate:
-  save_test_preds: False
+  save_test_preds: True
   metrics_file: metrics.json

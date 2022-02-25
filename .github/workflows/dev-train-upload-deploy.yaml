@@ -1,0 +1,100 @@
+name: dev-train-upload-deploy
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy-runner:
+    if: contains(github.event.head_commit.message, '[cml]')
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - name: deploy
+        shell: bash
+        env:
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        run: |
+          cml-runner \
+          --cloud aws \
+          --cloud-region us-east-1 \
+          --cloud-type g4dn.xlarge \
+          --labels=cml-runner
+
+  train-model-and-push:
+    if: contains(github.event.head_commit.message, '[cml]')
+    needs: deploy-runner
+    runs-on: [self-hosted, cml-runner]
+    container:
+      image: docker://iterativeai/cml
+      options: --gpus all
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: Setup Git User
+        run: |
+          # Get user name and email from previous commit
+          USER_NAME=$(git --no-pager log --format=format:'%ae' -n 1)
+          USER_EMAIL=$(git --no-pager log --format=format:'%ae' -n 1)
+          git config --local user.name "$USER_NAME"
+          git config --local user.email "$USER_EMAIL"
+      - name: Install pipenv
+        run: pip install pipenv
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+      - name: dvc-repro-cml
+        env:
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+        run: |
+          # Install dependencies
+          pipenv install --skip-lock
+
+          # Run dvc pipeline
+          pipenv run dvc pull
+          pipenv run dvc repro
+          pipenv run dvc push
+
+          # Add files to git and push
+          git pull
+          git add *
+          git commit -m "CML commit"
+          git push
+
+          # Create CML report
+          echo "## Metrics" >> report.md
+          dvc metrics show --md >> report.md
+          echo "## A few random test images" >> report.md
+          for file in $(ls data/test_preds/ |sort -R |tail -20); do cml-publish data/test_preds/$file --md >>report.md; done
+          cml send-comment --update report.md
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: model_pickle
+          path: models/model_pickle_fastai.pkl
+
+  deploy-dev-api:
+    needs: train-model-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@master
+        with:
+          name: model_pickle
+          path: models
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "mag-tiles-api-dev"
+          heroku_email: "alexkim@iterative.ai"
+          team: "iterative-sandbox"
+          usedocker: true
