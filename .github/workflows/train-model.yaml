@@ -68,7 +68,7 @@ jobs:
 
           # Add files to git and push
           git pull
-          git add metrics.json training_metrics.json training_metrics_dvc_plots/index.html
+          git add metrics.json training_metrics.json training_metrics training_metrics_dvc_plots/index.html
           git commit -m "CML commit: $COMMIT_MESSAGE"
           git push
 
