@@ -62,10 +62,13 @@ jobs:
           pipenv run dvc repro
           pipenv run dvc push
 
+          # Save original commit message
+          COMMIT_MESSAGE=$(git log -1 --format=%s)
+
           # Add files to git and push
           git pull
-          git add *
-          git commit -m "CML commit"
+          git add dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/
+          git commit -m "CML commit: $COMMIT_MESSAGE"
           git push
 
           # Create CML report
