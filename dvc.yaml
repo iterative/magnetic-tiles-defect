@@ -42,16 +42,16 @@ stages:
       - base
       - data_split
       - train
-    # live:
-    #   dvclive:
-    #     summary: true
-    #     html: true
+    live:
+      training_metrics:
+        summary: true
+        html: true
+        cache: false
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
       - ${data_split.test_img_dir_path}
       - ${data_split.test_mask_dir_path}
-      - models/model_pickle_fastai.pkl
       - src/stages/eval.py
       - pkg_list.txt
     params:

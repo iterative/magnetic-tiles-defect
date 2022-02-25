@@ -6,11 +6,10 @@ on:
       - master
       - dev
 
-
 jobs:
   deploy-runner:
     if: contains(github.event.head_commit.message, '[cml]')
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
@@ -62,11 +61,11 @@ jobs:
 
           # Run dvc pipeline
           pipenv run dvc pull
-          pipenv run dvc repro --no-commit
-          
+          pipenv run dvc repro
+
           # Add files to git and push
           git pull
-          git add metrics.json
+          git add metrics.json training_metrics.json training_metrics_dvc_plots/index.html
           git commit -m "CML commit"
           git push
 

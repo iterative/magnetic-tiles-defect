@@ -60,13 +60,13 @@ jobs:
           pipenv install --skip-lock
 
           # Run dvc pipeline
-          pipenv run dvc pull data/MAGNETIC_TILE_SURFACE_DEFECTS/images data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
+          pipenv run dvc pull
           pipenv run dvc repro
           pipenv run dvc push
 
           # Add files to git and push
           git pull
-          git add dvc.lock metrics.json
+          git add *
           git commit -m "CML commit"
           git push
 
@@ -98,6 +98,3 @@ jobs:
           heroku_email: "alexkim@iterative.ai"
           team: "iterative-sandbox"
           usedocker: true
-      # - name: list-repo
-      #   run: |
-      #     ls -lR

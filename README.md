@@ -29,10 +29,10 @@ At this point, we can assess the results in DVC Studio and GitHub and decide wha
 
 ```mermaid
 flowchart TB
-A(Work on experiment branch) -->|Push changes| B("Exp CML workflow\n(training & reporting)")
+A(git checkout dev\ngit check -b experiment) -->|Push changes| B("Exp CML workflow\n(training & reporting)")
 B --> |Reports,\nmetrics,\nplots| C("Check results.\nAre they good?")
 C --> |No\nchange experiment parameters | A
-C -->|Yes\nmerge to dev branch| E[Dev CML workflow]
+C -->|Yes\nmerge to dev branch| D
 ```
 
 ### 2. Deployment to the development environment
@@ -102,7 +102,7 @@ docker run -p 8000:8000 -e PORT=8000 mag-tiles
 ### Test API 
 With `curl`
 ```bash
-curl -X POST -F 'image=@<PATH_TO_IMAGE>' -v http://127.0.0.1:8000/analyze
+curl -X POST -F 'image=@data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images/exp4_num_258590.jpg' -v http://127.0.0.1:8000/analyze
 ```
 
 With python
