@@ -4,13 +4,13 @@ stages:
     cmd: python src/stages/check_pkgs.py --config=params.yaml
     outs:
     - path: pkg_list.txt
-      md5: 22fa057814126bad45d9d783fa2cb0c5
+      md5: 2701ee1716d0870cc619b662893da3ce
       size: 2310
   data_load:
     cmd: python src/stages/data_load.py --config=params.yaml
     deps:
     - path: pkg_list.txt
-      md5: 22fa057814126bad45d9d783fa2cb0c5
+      md5: 2701ee1716d0870cc619b662893da3ce
       size: 2310
     - path: src/stages/data_load.py
       md5: 481ef35d6faa72224f0f0842194becbc
@@ -50,7 +50,7 @@ stages:
       size: 199417
       nfiles: 392
     - path: pkg_list.txt
-      md5: 22fa057814126bad45d9d783fa2cb0c5
+      md5: 2701ee1716d0870cc619b662893da3ce
       size: 2310
     - path: src/stages/data_split.py
       md5: 34f52be01f05d45585264c1c998765d4
@@ -104,7 +104,7 @@ stages:
       size: 160099
       nfiles: 314
     - path: pkg_list.txt
-      md5: 22fa057814126bad45d9d783fa2cb0c5
+      md5: 2701ee1716d0870cc619b662893da3ce
       size: 2310
     - path: src/stages/train.py
       md5: a6ec2486d381039eac01b2463dfae760
@@ -124,16 +124,16 @@ stages:
         train:
           img_size: 200
           valid_pct: 0.2
-          learning_rate: 0.0005
+          learning_rate: 0.001
           batch_size: 16
-          n_epochs: 12
+          n_epochs: 15
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: training_metrics
-      md5: 4be4b3818ed4e8943e961e578148271e.dir
-      size: 2734
+      md5: bb36bbbf40aad995c1bf1553a1523ee8.dir
+      size: 3374
       nfiles: 6
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
@@ -147,7 +147,7 @@ stages:
       size: 39318
       nfiles: 78
     - path: pkg_list.txt
-      md5: 22fa057814126bad45d9d783fa2cb0c5
+      md5: 2701ee1716d0870cc619b662893da3ce
       size: 2310
     - path: src/stages/eval.py
       md5: 4d1ae58faaf33683ce0fbe6563f93878
@@ -170,9 +170,9 @@ stages:
         train:
           img_size: 200
           valid_pct: 0.2
-          learning_rate: 0.0005
+          learning_rate: 0.001
           batch_size: 16
-          n_epochs: 12
+          n_epochs: 15
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
