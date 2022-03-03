@@ -20,13 +20,13 @@ data_split:
 train:
   img_size: 200
   valid_pct: 0.2
-  learning_rate: 0.001
+  learning_rate: 0.002
   batch_size: 16
   n_epochs: 15
-  use_cpu: False
+  use_cpu: false
   model_pickle_dir_path: models
   model_pickle_fname: model_pickle_fastai.pkl
 
 evaluate:
-  save_test_preds: True
+  save_test_preds: true
   metrics_file: metrics.json
