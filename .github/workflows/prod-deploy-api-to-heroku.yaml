@@ -13,17 +13,17 @@ jobs:
       - uses: iterative/setup-cml@v1
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: "3.9"
       - name: Install pipenv
         run: pip install pipenv
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
       - name: dvc-pull-model
         env:
-          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # set your own via gh cli or UI
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # set your own via gh cli or UI
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # set your own via gh cli or UI
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} # set your own via gh cli or UI
         run: |
           pipenv install --dev
           pipenv run dvc pull models/model_pickle_fastai.pkl
@@ -43,8 +43,8 @@ jobs:
           path: models
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "mag-tiles-api-prod"
-          heroku_email: "alexkim@iterative.ai"
-          team: "iterative-sandbox"
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh cli or UI
+          heroku_app_name: "mag-tiles-api-prod" # change to a different name (must be unique globally)
+          heroku_email: "alexkim@iterative.ai" # set your email
+          team: "iterative-sandbox" # you don't need this if using a personal account
           usedocker: true

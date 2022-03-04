@@ -16,10 +16,10 @@ jobs:
       - name: deploy
         shell: bash
         env:
-          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # set your own via gh cli or UI
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # set your own via gh cli or UI
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # set your own via gh cli or UI
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} # set your own via gh cli or UI
         run: |
           cml-runner \
           --cloud aws \
@@ -51,10 +51,10 @@ jobs:
         run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
       - name: dvc-repro-cml
         env:
-          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # set your own via gh cli or UI
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # set your own via gh cli or UI
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # set your own via gh cli or UI
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} # set your own via gh cli or UI
         run: |
           # Install dependencies
           pipenv install --skip-lock
