@@ -35,6 +35,8 @@ jobs:
       options: --gpus all
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
@@ -67,9 +69,9 @@ jobs:
           COMMIT_MESSAGE=$(git log -1 --format=%s)
 
           # Add files to git and push
-          git pull
+          git reset --soft HEAD~2
           git add metrics.json training_metrics.json training_metrics training_metrics_dvc_plots/index.html
-          git commit -m "CML commit: $COMMIT_MESSAGE"
+          git commit -m "$COMMIT_MESSAGE [skip ci]"
           git push
 
           # Create CML report
