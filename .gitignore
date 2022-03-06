@@ -155,4 +155,5 @@ cython_debug/
 .DS_Store
 Pipfile.lock
 pkg_list.txt
-data/
+/data
+/models

@@ -94,7 +94,7 @@ jobs:
           path: models
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh cli or UI
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh cli or UI``
           heroku_app_name: "mag-tiles-api-dev" # change to a different name (must be unique globally)
           heroku_email: "alexkim@iterative.ai" # set your email
           team: "iterative-sandbox" # you don't need this if using a personal account
