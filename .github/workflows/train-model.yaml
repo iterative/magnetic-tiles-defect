@@ -63,7 +63,8 @@ jobs:
 
           # Run dvc pipeline
           pipenv run dvc pull
-          pipenv run dvc repro || pipenv run dvc repro -f && pipenv run dvc push
+          pipenv run dvc repro || pipenv run dvc repro -f 
+          pipenv run dvc push
 
           # Save original commit message
           COMMIT_MESSAGE=$(git log -1 --format=%s)
