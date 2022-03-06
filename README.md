@@ -23,7 +23,10 @@ Once we think our experiment is ready to be run, we'll push our changes to a rem
 1. provision an EC2 virtual machine with a GPU in AWS
 2. deploy our experiment branch to this machine
 3. rerun the entire DVC pipeline 
-4. report live metrics to DVC Studio and push a file with final metrics back to GitHub 
+4. push files with metrics and other DVC artifacts back to GitHub
+
+*Note: the workflow is set up so that GitHub Actions will overwrite git history, thus in order to sync our local workspace with the remote we'll run the `git fetch` command followed by the `git reset --hard @{upstream}` command.
+Here we don't run `git pull` as it will result in merging the upstream into our local git history.
 
 At this point, we can assess the results in DVC Studio and GitHub and decide what things we want to change next.
 
@@ -43,6 +46,9 @@ Once we are happy with our model's performance on the experiment branch, we can 
 This would trigger a different CI/CD job that will:
 1. retrain the model with the new parameters
 2. deploy the web REST API application (that relies on the new/retrained model) to a development endpoint on Heroku
+
+*Note: the workflow is set up so that GitHub Actions will overwrite git history, thus in order to sync our local workspace with the remote we'll run the `git fetch` command followed by the `git reset --hard @{upstream}` command.
+Here we don't run `git pull` as it will result in merging the upstream into our local git history.
 
 Now we can test our API and assess the end-to-end performance of the overall solution.
 
