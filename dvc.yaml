@@ -42,6 +42,8 @@ stages:
       - base
       - data_split
       - train
+    outs:
+      - ${train.model_pickle_dir_path}
     live:
       training_metrics:
         summary: true
@@ -50,6 +52,7 @@ stages:
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
+      - ${train.model_pickle_dir_path}
       - ${data_split.test_img_dir_path}
       - ${data_split.test_mask_dir_path}
       - src/stages/eval.py
