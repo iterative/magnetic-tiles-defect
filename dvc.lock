@@ -122,7 +122,7 @@ stages:
           test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
           test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
         train:
-          img_size: 220
+          img_size: 250
           valid_pct: 0.2
           learning_rate: 0.005
           batch_size: 16
@@ -132,12 +132,12 @@ stages:
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: models
-      md5: a0a3129e8b33204b6eabb0f04145094d.dir
-      size: 235907829
+      md5: dfad272d6a47db84b76b9baca2044a1f.dir
+      size: 256874037
       nfiles: 1
     - path: training_metrics
-      md5: d15a933e668026922f99e2439f0c4701.dir
-      size: 2728
+      md5: 7d769ca3a246c7e1eb3cf6deb9259b5c.dir
+      size: 2697
       nfiles: 6
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
@@ -151,8 +151,8 @@ stages:
       size: 39318
       nfiles: 78
     - path: models
-      md5: a0a3129e8b33204b6eabb0f04145094d.dir
-      size: 235907829
+      md5: dfad272d6a47db84b76b9baca2044a1f.dir
+      size: 256874037
       nfiles: 1
     - path: pkg_list.txt
       md5: 7bc395fcece21360384f79032d7130bd
@@ -176,7 +176,7 @@ stages:
           save_test_preds: true
           metrics_file: metrics.json
         train:
-          img_size: 220
+          img_size: 250
           valid_pct: 0.2
           learning_rate: 0.005
           batch_size: 16
@@ -186,5 +186,5 @@ stages:
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: metrics.json
-      md5: 52e72b11da84756263907526ef46227e
+      md5: 0055da5b32396abdb32931c24af20e2f
       size: 65
