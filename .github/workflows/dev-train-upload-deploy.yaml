@@ -33,6 +33,8 @@ jobs:
       options: --gpus all
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
@@ -59,17 +61,19 @@ jobs:
 
           # Run dvc pipeline
           pipenv run dvc pull
-          pipenv run dvc repro
+          pipenv run dvc repro || pipenv run dvc repro -f 
           pipenv run dvc push
 
           # Save original commit message
           COMMIT_MESSAGE=$(git log -1 --format=%s)
 
           # Add files to git and push
-          git pull
           git add dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/
-          git commit -m "CML commit: $COMMIT_MESSAGE"
-          git push
+          git commit --allow-empty -m "CML commit"
+          # Squash the last two commits: one that triggered this CI/CD run and the last one above
+          git reset --soft HEAD~2
+          git commit -m "$COMMIT_MESSAGE [skip ci]"
+          git push -f
 
           # Create CML report
           echo "## Metrics" >> report.md
@@ -94,7 +98,7 @@ jobs:
           path: models
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh cli or UI
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh cli or UI``
           heroku_app_name: "mag-tiles-api-dev" # change to a different name (must be unique globally)
           heroku_email: "alexkim@iterative.ai" # set your email
           team: "iterative-sandbox" # you don't need this if using a personal account

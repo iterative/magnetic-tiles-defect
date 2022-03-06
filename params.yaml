@@ -18,11 +18,11 @@ data_split:
   test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
 
 train:
-  img_size: 200
+  img_size: 250
   valid_pct: 0.2
-  learning_rate: 0.002
+  learning_rate: 0.005
   batch_size: 16
-  n_epochs: 15
+  n_epochs: 12
   use_cpu: false
   model_pickle_dir_path: models
   model_pickle_fname: model_pickle_fastai.pkl
