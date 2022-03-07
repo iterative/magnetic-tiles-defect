@@ -86,14 +86,46 @@ source $VIRTUAL_ENV/bin/activate
 ### Remote storage
 
 AWS S3 is our remote storage configured in the [.dvc/config](https://github.com/iterative/magnetic-tiles-defect/blob/master/.dvc/config) file. 
-You need to edit this file to configure your own. For more info see the [docs](https://dvc.org/doc/command-reference/remote/add).
+You need to edit this file to configure your own. Many different remote storage types are supported including all major cloud providers. For more info see the [docs](https://dvc.org/doc/command-reference/remote/add).
 
 ### Model Training
 ```bash
 dvc repro
 ```
 
-The model will be saved in the `models/` directory
+The model will be saved in the `models/` directory.
+
+Here's the DAG of the pipeline:
+```
+$ dvc dag
+                               +----------------+                         
+                               | check_packages |                         
+                          *****+----------------+*****                    
+                     *****        *          **       ******              
+               ******          ***             **           *****         
+            ***               *                  **              ******   
++-----------+               **                     *                   ***
+| data_load |             **                       *                     *
++-----------+           **                         *                     *
+           ***        **                           *                     *
+              *     **                             *                     *
+               **  *                               *                     *
+          +------------+                           *                     *
+          | data_split |***                        *                     *
+          +------------+   *****                   *                     *
+                  *             *******            *                     *
+                  *                    *****       *                     *
+                  *                         ****   *                     *
+                  **                          +-------+                ***
+                    ****                      | train |          ******   
+                        ****                  +-------+     *****         
+                            ***              **       ******              
+                               ****        **   ******                    
+                                   **     *  ***                          
+                                  +----------+                            
+                                  | evaluate |                            
+                                  +----------+
+```             
 
 ### Web API serving (local)
 ```bash
