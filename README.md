@@ -13,6 +13,7 @@ https://www.researchgate.net/profile/Congying-Qiu/publication/327701995_Saliency
 https://github.com/abin24/Magnetic-tile-defect-datasets. (including the dot)
 
 ## CML-based workflows in GitHub Actions
+For instruction on how to runs things locally, see the "Local development setup" section below.
 
 ### 1. Experimentation phase
 
@@ -82,6 +83,11 @@ echo "export PYTHONPATH=$PWD" >> $VIRTUAL_ENV/bin/activate
 source $VIRTUAL_ENV/bin/activate
 ```
 
+### Remote storage
+
+AWS S3 is our remote storage configured in the [.dvc/config](https://github.com/iterative/magnetic-tiles-defect/blob/master/.dvc/config) file. 
+You need to edit this file to configure your own. For more info see the [docs](https://dvc.org/doc/command-reference/remote/add).
+
 ### Model Training
 ```bash
 dvc repro
@@ -106,6 +112,9 @@ docker run -p 8000:8000 -e PORT=8000 mag-tiles
 ```
 
 ### Test API 
+
+*only POST method is supported, i.e. opening a link in a browser (GET method) will return a `"Method Not Allowed"` response.
+
 With `curl`
 ```bash
 curl -X POST -F 'image=@data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images/exp4_num_258590.jpg' -v http://127.0.0.1:8000/analyze
