@@ -62,13 +62,13 @@ A(Dev CML workflow) --> B(Retraining) --> C(Deployment to dev and monitoring)
 
 [workflow file](.github/workflows/prod-deploy-api-to-heroku.yaml)
 
-If we've thoroughly tested and monitored our dev web API, we can merge the development branch in the master branch of our repository.
-Again, this triggers the 3rd CI/CD workflow that deploys the code from the master branch to the production API.
+If we've thoroughly tested and monitored our dev web API, we can merge the development branch in the main branch of our repository.
+Again, this triggers the 3rd CI/CD workflow that deploys the code from the main branch to the production API.
 
 
 ```mermaid
 flowchart TB
-A(Successful deployment to dev) --> B(Merge dev into master) --> C(Prod CML workflow) --> D(Deployment to prod) 
+A(Successful deployment to dev) --> B(Merge dev into main) --> C(Prod CML workflow) --> D(Deployment to prod) 
 ```
 
 ## Local development setup
