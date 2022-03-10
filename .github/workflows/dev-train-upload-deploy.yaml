@@ -61,7 +61,7 @@ jobs:
 
           # Run dvc pipeline
           pipenv run dvc pull
-          pipenv run dvc repro || pipenv run dvc repro -f 
+          pipenv run dvc exp run || pipenv run dvc exp run -f 
           pipenv run dvc push
 
           # Save original commit message
