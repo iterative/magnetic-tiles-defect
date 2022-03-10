@@ -4,13 +4,13 @@ stages:
     cmd: python src/stages/check_pkgs.py --config=params.yaml
     outs:
     - path: pkg_list.txt
-      md5: 3320a981143e11b91513e0a5c7c63cd2
+      md5: 884918ed3eee99f2cd671131cab96cf1
       size: 2310
   data_load:
     cmd: python src/stages/data_load.py --config=params.yaml
     deps:
     - path: pkg_list.txt
-      md5: 3320a981143e11b91513e0a5c7c63cd2
+      md5: 884918ed3eee99f2cd671131cab96cf1
       size: 2310
     - path: src/stages/data_load.py
       md5: 481ef35d6faa72224f0f0842194becbc
@@ -50,7 +50,7 @@ stages:
       size: 199417
       nfiles: 392
     - path: pkg_list.txt
-      md5: 3320a981143e11b91513e0a5c7c63cd2
+      md5: 884918ed3eee99f2cd671131cab96cf1
       size: 2310
     - path: src/stages/data_split.py
       md5: 34f52be01f05d45585264c1c998765d4
@@ -104,7 +104,7 @@ stages:
       size: 160099
       nfiles: 314
     - path: pkg_list.txt
-      md5: 3320a981143e11b91513e0a5c7c63cd2
+      md5: 884918ed3eee99f2cd671131cab96cf1
       size: 2310
     - path: src/stages/train.py
       md5: a6ec2486d381039eac01b2463dfae760
@@ -132,12 +132,12 @@ stages:
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: models
-      md5: f766de9ba80f036bb6191fde336dfcac.dir
-      size: 256873973
+      md5: 1971536d2c0e385010e2df8b2a9af70f.dir
+      size: 256874037
       nfiles: 1
     - path: training_metrics
-      md5: ccc2d230eb53c10d23d38fb49f25a46c.dir
-      size: 2633
+      md5: 17e2609293204293dc1399a2ef5444fc.dir
+      size: 2700
       nfiles: 6
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
@@ -151,11 +151,11 @@ stages:
       size: 39318
       nfiles: 78
     - path: models
-      md5: f766de9ba80f036bb6191fde336dfcac.dir
-      size: 256873973
+      md5: 1971536d2c0e385010e2df8b2a9af70f.dir
+      size: 256874037
       nfiles: 1
     - path: pkg_list.txt
-      md5: 3320a981143e11b91513e0a5c7c63cd2
+      md5: 884918ed3eee99f2cd671131cab96cf1
       size: 2310
     - path: src/stages/eval.py
       md5: 4d1ae58faaf33683ce0fbe6563f93878
@@ -186,5 +186,5 @@ stages:
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: metrics.json
-      md5: daa7ca9ad80c9a0fdd438479102ed96c
-      size: 63
+      md5: c6683c56cdd7c784d46e0b9770cef288
+      size: 65
