@@ -3,7 +3,7 @@ name: prod-deploy-api-to-heroku
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   pull-model-pickle:

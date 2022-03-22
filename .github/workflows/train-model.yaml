@@ -3,7 +3,7 @@ name: train-model
 on:
   push:
     branches-ignore: # exclude master and dev below
-      - master
+      - main
       - dev
 
 jobs:
