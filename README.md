@@ -17,7 +17,7 @@ For instruction on how to runs things locally, see the "Local development setup"
 
 ### 1. Experimentation phase
 
-[workflow file](.github/workflows/train-model.yaml)
+[workflow file](.github/workflows/1-experiment.yaml)
 
 In this stage, we'll be performing all our model experiments: work on data preprocessing, change model architecture, tune hyperparameters, etc.
 Once we think our experiment is ready to be run, we'll push our changes to a remote repository (in this case, GitHub). This push will trigger a CI/CD job in GitHub Actions, which in turn will:
@@ -41,7 +41,7 @@ C -->|Yes| D(Merge to dev branch)
 
 ### 2. Deployment to the development environment
 
-[workflow file](.github/workflows/dev-train-upload-deploy.yaml)
+[workflow file](.github/workflows/2-develop.yaml)
 
 Once we are happy with our model's performance on the experiment branch, we can merge it into the dev branch.
 This would trigger a different CI/CD job that will:
@@ -60,7 +60,7 @@ A(Dev CML workflow) --> B(Retraining) --> C(Deployment to dev and monitoring)
 
 ### 3. Deployment to the production environment
 
-[workflow file](.github/workflows/prod-deploy-api-to-heroku.yaml)
+[workflow file](.github/workflows/3-deploy.yaml)
 
 If we've thoroughly tested and monitored our dev web API, we can merge the development branch in the main branch of our repository.
 Again, this triggers the 3rd CI/CD workflow that deploys the code from the main branch to the production API.
@@ -85,7 +85,7 @@ source $VIRTUAL_ENV/bin/activate
 
 ### Remote storage
 
-AWS S3 is our remote storage configured in the [.dvc/config](https://github.com/iterative/magnetic-tiles-defect/blob/master/.dvc/config) file. 
+AWS S3 is our remote storage configured in the [.dvc/config](https://github.com/iterative/magnetic-tiles-defect/blob/main/.dvc/config) file. 
 You need to edit this file to configure your own. Many different remote storage types are supported including all major cloud providers. For more info see the [docs](https://dvc.org/doc/command-reference/remote/add).
 
 ### Model Training
@@ -149,7 +149,7 @@ docker run -p 8000:8000 -e PORT=8000 mag-tiles
 
 With `curl`
 ```bash
-curl -X POST -F 'image=@data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images/exp4_num_258590.jpg' -v http://127.0.0.1:8000/analyze
+curl -X POST -F 'image=@data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images/<image_name>.jpg' -v http://127.0.0.1:8000/analyze
 ```
 
 With python
@@ -164,7 +164,7 @@ import requests
 
 url = 'http://127.0.0.1:8000/analyze'
 file_path = Path(
-    'data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images/exp4_num_258590.jpg')
+    'data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images/<image_name>.jpg')
 files = {'image': (str(file_path), open(file_path, 'rb'), "image/jpeg")}
 response = requests.post(url, files=files)
 data = json.loads(response.content)
