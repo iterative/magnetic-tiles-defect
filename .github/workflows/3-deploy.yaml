@@ -5,7 +5,7 @@ on:
 jobs:
   pull-model:
     runs-on: ubuntu-latest
-    environment: runner
+    environment: cloud
     permissions:
       contents: read
       id-token: write
