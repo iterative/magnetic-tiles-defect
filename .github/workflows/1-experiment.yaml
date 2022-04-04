@@ -41,6 +41,8 @@ jobs:
           python-version: "3.9"
       - name: Setup Git User
         run: cml ci
+        env:
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Install pipenv
         run: |
           pip install pipenv
