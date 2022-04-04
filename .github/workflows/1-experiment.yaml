@@ -41,6 +41,10 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
       - name: Setup Git User
         run: cml ci
       - name: Install pipenv
@@ -52,9 +56,6 @@ jobs:
           # set these secrets via gh CLI or UI. See also:
           # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         run: |
           # Install dependencies
           pipenv install --skip-lock
@@ -64,13 +65,8 @@ jobs:
           pipenv run dvc exp run || pipenv run dvc exp run -f
           pipenv run dvc push
 
-          # Save original commit message
-          COMMIT_MESSAGE=$(git log -1 --format=%s)
-
           # Add files to git and push
-          git add dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/
-          git commit --allow-empty -m "CML commit"
-          git push
+          cml pr dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/**
 
           # Create CML report
           echo "## Metrics" >> report.md
@@ -79,4 +75,4 @@ jobs:
           for file in $(ls data/test_preds/ |sort -R |tail -20); do
             cml publish data/test_preds/$file --md >> report.md
           done
-          cml send-comment --update report.md
+          cml send-comment --pr --update report.md
