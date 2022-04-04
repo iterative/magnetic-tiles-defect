@@ -55,6 +55,7 @@ jobs:
         run: |
           pip install pipenv
           echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+      - run: rm $(which dvc) && pip install dvc
       - name: dvc-repro-cml
         env:
           # set these secrets via gh CLI or UI. See also:
