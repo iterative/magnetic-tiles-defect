@@ -31,12 +31,16 @@ jobs:
   train-model:
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
-    environment: cloud
     container:
       image: docker://iterativeai/cml:0-dvc2-base1
       options: --gpus all
+    environment: cloud
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
