@@ -5,7 +5,6 @@ on:
     branches-ignore: [main, dev]
 jobs:
   deploy-runner:
-    if: contains(github.event.head_commit.message, '[cml]')
     runs-on: ubuntu-latest
     environment: cloud
     permissions:
@@ -30,7 +29,6 @@ jobs:
               --cloud-type=g4dn.xlarge \
               --labels=cml-runner
   train-model:
-    if: contains(github.event.head_commit.message, '[cml]')
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
     container:
