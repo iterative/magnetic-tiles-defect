@@ -1,67 +1,64 @@
-name: dev-train-upload-deploy
-
+name: Train Upload Deploy-dev
 on:
   push:
-    branches:
-      - dev
-
+    branches: [dev]
 jobs:
   deploy-runner:
     runs-on: ubuntu-latest
+    environment: cloud
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
       - name: deploy
-        shell: bash
         env:
-          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # set your own via gh cli or UI
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # set your own via gh cli or UI
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # set your own via gh cli or UI
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} # set your own via gh cli or UI
+          # set these secrets via gh CLI or UI. See also:
+          # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          cml-runner \
-          --cloud aws \
-          --cloud-region us-east-1 \
-          --cloud-type g4dn.xlarge \
-          --labels=cml-runner
-
-  train-model-and-push:
+          cml runner \
+              --cloud=aws \
+              --cloud-region=us-east-1 \
+              --cloud-type=g4dn.xlarge \
+              --labels=cml-runner
+  train-and-push:
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
     container:
-      image: docker://iterativeai/cml
+      image: docker://iterativeai/cml:0-dvc2-base1
       options: --gpus all
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
       - name: Setup Git User
-        run: |
-          # Get user name and email from previous commit
-          USER_NAME=$(git --no-pager log --format=format:'%ae' -n 1)
-          USER_EMAIL=$(git --no-pager log --format=format:'%ae' -n 1)
-          git config --local user.name "$USER_NAME"
-          git config --local user.email "$USER_EMAIL"
+        run: cml ci
       - name: Install pipenv
-        run: pip install pipenv
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+        run: |
+          pip install pipenv
+          echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
       - name: dvc-repro-cml
         env:
-          repo_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # set your own via gh cli or UI
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # set your own via gh cli or UI
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # set your own via gh cli or UI
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} # set your own via gh cli or UI
+          # set these secrets via gh CLI or UI. See also:
+          # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         run: |
           # Install dependencies
           pipenv install --skip-lock
 
           # Run dvc pipeline
           pipenv run dvc pull
-          pipenv run dvc exp run || pipenv run dvc exp run -f 
+          pipenv run dvc exp run || pipenv run dvc exp run -f
           pipenv run dvc push
 
           # Save original commit message
@@ -70,25 +67,22 @@ jobs:
           # Add files to git and push
           git add dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/
           git commit --allow-empty -m "CML commit"
-          # Squash the last two commits: one that triggered this CI/CD run and the last one above
-          git reset --soft HEAD~2
-          git commit -m "$COMMIT_MESSAGE [skip ci]"
-          git push -f
+          git push
 
           # Create CML report
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
-          for file in $(ls data/test_preds/ |sort -R |tail -20); do cml-publish data/test_preds/$file --md >>report.md; done
+          for file in $(ls data/test_preds/ |sort -R |tail -20); do
+            cml publish data/test_preds/$file --md >> report.md
+          done
           cml send-comment --update report.md
-
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v3
         with:
           name: model_pickle
           path: models/model_pickle_fastai.pkl
-
   deploy-dev-api:
-    needs: train-model-and-push
+    needs: train-and-push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -98,7 +92,7 @@ jobs:
           path: models
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh cli or UI``
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh CLI or UI
           heroku_app_name: "mag-tiles-api-dev" # change to a different name (must be unique globally)
           heroku_email: "alexkim@iterative.ai" # set your email
           team: "iterative-sandbox" # you don't need this if using a personal account
