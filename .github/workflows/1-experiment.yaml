@@ -40,7 +40,6 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v2
-      - uses: iterative/setup-cml@v1
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
