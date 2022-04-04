@@ -32,7 +32,7 @@ jobs:
     needs: deploy-runner
     runs-on: [self-hosted, cml-runner]
     container:
-      image: docker://iterativeai/cml:0-dvc2-base1
+      image: iterativeai/cml:0-dvc2-base1
       options: --gpus all
     environment: cloud
     permissions:
