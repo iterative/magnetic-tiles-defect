@@ -69,7 +69,6 @@ jobs:
           pipenv run dvc exp run || pipenv run dvc exp run -f
           pipenv run dvc push
 
-          # Add files to git and push
           cml pr dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/**
 
           # Create CML report
