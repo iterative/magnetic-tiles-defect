@@ -1,82 +1,17 @@
-name: Train
-on:
-  push:
-    # don't run on `main` and `dev` commits
-    branches-ignore: [main, dev]
+on: push
 jobs:
-  deploy-runner:
+  debug:
     runs-on: ubuntu-latest
-    environment: cloud
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v2
-      - uses: iterative/setup-cml@v1
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: us-east-1
-          role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
-      - name: deploy
-        env:
-          # set these secrets via gh CLI or UI. See also:
-          # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: |
-          cml runner \
-              --cloud=aws \
-              --cloud-region=us-east-1 \
-              --cloud-type=g4dn.xlarge \
-              --labels=cml-runner
-  train-model:
-    needs: deploy-runner
-    runs-on: [self-hosted, cml-runner]
-    container:
-      image: iterativeai/cml:0-dvc2-base1
-      options: --gpus all
-    environment: cloud
-    permissions:
-      contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: us-east-1
-          role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
-      - name: Setup Git User
-        run: cml ci
-        env:
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      - name: Install pipenv
-        run: |
-          pip install pipenv
-          echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-      - name: dvc-repro-cml
-        env:
-          # set these secrets via gh CLI or UI. See also:
-          # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: |
-          # Install dependencies
+      - run: |
+          pip install pipenv && echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+      - run: |
           pipenv install --skip-lock
-
-          # Run dvc pipeline
-          pipenv run dvc pull
-          pipenv run dvc exp run || pipenv run dvc exp run -f
-          pipenv run dvc push
-
-          # Add files to git and push
-          cml pr dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/**
-
-          # Create CML report
-          echo "## Metrics" >> report.md
-          dvc metrics show --md >> report.md
-          echo "## A few random test images" >> report.md
-          for file in $(ls data/test_preds/ |sort -R |tail -20); do
-            cml publish data/test_preds/$file --md >> report.md
-          done
-          cml send-comment --pr --update report.md
+          echo "Run pip freeze"
+          pipenv run pip freeze
+          echo "Run dvc doctor"
+          pipenv run dvc doctor
