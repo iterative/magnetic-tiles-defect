@@ -4,19 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-torch = "*"
-torchvision = "*"
-fastai = "*"
-fastcore = "*"
-tqdm = "*"
-pillow = "*"
-dvc = {version = "*", extras = ["s3"]}
-fastapi = {extras = ["all"], version = "*"}
-python-box = "*"
-dvclive = "*"
-ujson = "*"
-uvicorn = "*"
-wrapt = "*"
+torch = "==1.11.0"
+torchvision = "==0.12.0"
+fastai = "==2.5.6"
+fastcore = "==1.4.1"
+tqdm = "==4.64.0"
+pillow = "==9.1.0"
+dvc = {version = "==2.10.1", extras = ["s3"]}
+fastapi = {extras = ["all"], version = "==0.75.1"}
+python-box = "==6.0.2"
+dvclive = "==0.7.1"
+ujson = "==4.3.0"
+uvicorn = "==0.15.0"
+wrapt = "==1.14.0"
 
 [dev-packages]
 ipykernel = "*"
