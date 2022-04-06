@@ -63,7 +63,7 @@ jobs:
         run: |
           # Install dependencies
           pipenv install --skip-lock
-
+          pipenv run dvc doctor
           # Run dvc pipeline
           pipenv run dvc pull
           pipenv run dvc repro
