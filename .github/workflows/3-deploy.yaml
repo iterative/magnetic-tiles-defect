@@ -25,7 +25,7 @@ jobs:
           role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
       - name: dvc-pull-model
         run: |
-          pipenv install --skip-lock
+          pipenv install
           pipenv run dvc pull models/model_pickle_fastai.pkl
       - uses: actions/upload-artifact@master
         with:

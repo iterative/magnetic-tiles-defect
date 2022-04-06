@@ -61,7 +61,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           # Install dependencies
-          pipenv install --skip-lock
+          pipenv install
 
           # Run dvc pipeline
           pipenv run dvc pull
