@@ -154,7 +154,5 @@ cython_debug/
 #.idea/
 .DS_Store
 .vscode/
-Pipfile.lock
-pkg_list.txt
 /data
 /models
