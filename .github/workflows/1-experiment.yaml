@@ -63,12 +63,8 @@ jobs:
         run: |
           # Install dependencies
           pipenv install --skip-lock
-          # Run dvc pipeline
-          echo "Run dvc pull"
           pipenv run dvc pull
-          echo "Run dvc repro"
           pipenv run dvc repro
-          echo "Run dvc push"
           pipenv run dvc push
 
           cml pr dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/**
