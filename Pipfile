@@ -14,9 +14,7 @@ dvc = {version = "==2.10.1", extras = ["s3"]}
 fastapi = {extras = ["all"], version = "==0.75.1"}
 python-box = "==6.0.2"
 dvclive = "==0.7.1"
-ujson = "==4.3.0"
 uvicorn = "==0.15.0"
-wrapt = "==1.14.0"
 
 [dev-packages]
 ipykernel = "*"
