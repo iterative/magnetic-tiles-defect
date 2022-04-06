@@ -66,8 +66,8 @@ jobs:
           # Run dvc pipeline
           echo "Run dvc pull"
           pipenv run dvc pull
-          echo "Run dvc exp run"
-          pipenv run dvc exp run || pipenv run dvc exp run -f
+          echo "Run dvc repro"
+          pipenv run dvc repro
           echo "Run dvc push"
           pipenv run dvc push
 
