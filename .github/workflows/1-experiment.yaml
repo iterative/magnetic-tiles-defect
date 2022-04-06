@@ -64,7 +64,7 @@ jobs:
           # Install dependencies
           pipenv install --skip-lock
           pipenv run dvc pull
-          pipenv run dvc repro
+          pipenv run dvc exp run -v
           pipenv run dvc push
 
           cml pr dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/**
