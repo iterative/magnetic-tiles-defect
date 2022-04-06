@@ -4,25 +4,27 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-torch = "==1.10.2"
-torchvision = "==0.11.3"
-fastai = "==2.5.3"
-fastcore = "==1.3.27"
-tqdm = "==4.62.3"
-pillow = "==9.0.1"
+torch = "==1.11.0"
+torchvision = "==0.12.0"
+fastai = "==2.5.6"
+fastcore = "==1.4.1"
+tqdm = "==4.64.0"
+pillow = "==9.1.0"
 dvc = {version = "==2.10.1", extras = ["s3"]}
-fastapi = {extras = ["all"], version = "==0.74.0"}
-python-box = "==5.4.1"
-dvclive = "==0.5.1"
-ujson = "==5.1.0"
+fastapi = {extras = ["all"], version = "==0.75.1"}
+python-box = "==6.0.2"
+dvclive = "==0.7.1"
+ujson = "==4.3.0"
+uvicorn = "==0.15.0"
+wrapt = "==1.14.0"
 
 [dev-packages]
-ipykernel = "==6.9.1"
+ipykernel = "*"
 autopep8 = "*"
 pylint = "*"
 bandit = "*"
 ipywidgets = "*"
-notebook = "==6.4.8"
+notebook = "*"
 
 [requires]
 python_version = "3"

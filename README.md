@@ -177,8 +177,8 @@ plt.imsave(f'{file_path.stem}_mask.png', pred, cmap=cm.gray)
 ```bash
 heroku container:login
 heroku create <APP_NAME>
-heroku container:push --app <APP_NAME>
-heroku container:release --app <APP_NAME>
+heroku container:push web --app <APP_NAME>
+heroku container:release web --app <APP_NAME>
 ```
 
-Currently, the dev version of the app is deployed to https://mag-tiles-api-dev.herokuapp.com/analyze
+Currently, the dev version of the app is deployed to https://demo-api-mag-tiles-dev.herokuapp.com/analyze
