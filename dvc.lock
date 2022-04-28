@@ -4,14 +4,14 @@ stages:
     cmd: pipenv run pip freeze > requirements.txt
     outs:
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 9078e028fca0ea657c9fff86371dcefc
+      size: 3561
   data_load:
     cmd: python src/stages/data_load.py --config=params.yaml
     deps:
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 9078e028fca0ea657c9fff86371dcefc
+      size: 3561
     - path: src/stages/data_load.py
       md5: 481ef35d6faa72224f0f0842194becbc
       size: 797
@@ -50,8 +50,8 @@ stages:
       size: 199417
       nfiles: 392
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 9078e028fca0ea657c9fff86371dcefc
+      size: 3561
     - path: src/stages/data_split.py
       md5: 34f52be01f05d45585264c1c998765d4
       size: 1295
@@ -104,8 +104,8 @@ stages:
       size: 165153
       nfiles: 314
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 9078e028fca0ea657c9fff86371dcefc
+      size: 3561
     - path: src/stages/train.py
       md5: a6ec2486d381039eac01b2463dfae760
       size: 1597
@@ -124,20 +124,20 @@ stages:
         train:
           img_size: 200
           valid_pct: 0.2
-          learning_rate: 0.005
-          batch_size: 8
+          learning_rate: 0.01
+          batch_size: 16
           n_epochs: 10
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: models
-      md5: e68c53794a1fbcf967a067da7b4103ba.dir
-      size: 190185141
+      md5: b4cac22dcd165beacbf0917b21b8aea3.dir
+      size: 223560309
       nfiles: 1
     - path: training_metrics
-      md5: ccc588b1adce5fef7427d647fe5e7ddd.dir
-      size: 2270
+      md5: 72935877ab60fa06ac29f879115582c5.dir
+      size: 2339
       nfiles: 6
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
@@ -151,12 +151,12 @@ stages:
       size: 34264
       nfiles: 78
     - path: models
-      md5: e68c53794a1fbcf967a067da7b4103ba.dir
-      size: 190185141
+      md5: b4cac22dcd165beacbf0917b21b8aea3.dir
+      size: 223560309
       nfiles: 1
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 9078e028fca0ea657c9fff86371dcefc
+      size: 3561
     - path: src/stages/eval.py
       md5: 4d1ae58faaf33683ce0fbe6563f93878
       size: 1472
@@ -178,13 +178,13 @@ stages:
         train:
           img_size: 200
           valid_pct: 0.2
-          learning_rate: 0.005
-          batch_size: 8
+          learning_rate: 0.01
+          batch_size: 16
           n_epochs: 10
           use_cpu: false
           model_pickle_dir_path: models
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: metrics.json
-      md5: d62c799d50f66150fb5684fc1995527d
-      size: 64
+      md5: 6ef9bd8b2ceb59b8b7b43278a16f6275
+      size: 65
