@@ -1,4 +1,7 @@
 # Saliency defect detection of magnetic tiles
+
+See the blog post at https://dvc.org/blog/end-to-end-computer-vision-api-part-1-data-versioning-and-ml-pipelines for a full explanation.
+
 ### This project contains two components:
 1. training of image segmentation model using DVC pipelines
 2. web API that calls the above model on a provided image and responds with a binary segmentation mask
