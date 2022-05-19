@@ -15,7 +15,6 @@ fastapi = {extras = ["all"], version = "==0.75.1"}
 python-box = "==6.0.2"
 dvclive = "==0.7.1"
 uvicorn = "==0.15.0"
-numpy = "==1.22.3"
 
 [dev-packages]
 ipykernel = "*"
