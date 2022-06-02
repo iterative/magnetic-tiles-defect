@@ -67,8 +67,6 @@ jobs:
           pipenv run dvc exp run
           pipenv run dvc push
 
-          cml pr dvc.lock metrics.json training_metrics.json training_metrics_dvc_plots/**
-
           # Create CML report
           echo "## Metrics" >> report.md
           pipenv run dvc metrics show --md >> report.md

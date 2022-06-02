@@ -4,14 +4,14 @@ stages:
     cmd: pipenv run pip freeze > requirements.txt
     outs:
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 0fbfbeb39bc8c13a8c663523a4c2f7db
+      size: 2711
   data_load:
     cmd: python src/stages/data_load.py --config=params.yaml
     deps:
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 0fbfbeb39bc8c13a8c663523a4c2f7db
+      size: 2711
     - path: src/stages/data_load.py
       md5: 481ef35d6faa72224f0f0842194becbc
       size: 797
@@ -26,9 +26,6 @@ stages:
           data_dir: data
           orig_dirname: Magnetic-tile-defect-datasets.-master
           new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
-          code_names:
-          - 0
-          - 1
     outs:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/images
       md5: b7178caeac712acf11359c9f183f2cdc.dir
@@ -50,8 +47,8 @@ stages:
       size: 199417
       nfiles: 392
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 0fbfbeb39bc8c13a8c663523a4c2f7db
+      size: 2711
     - path: src/stages/data_split.py
       md5: 34f52be01f05d45585264c1c998765d4
       size: 1295
@@ -66,9 +63,6 @@ stages:
           data_dir: data
           orig_dirname: Magnetic-tile-defect-datasets.-master
           new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
-          code_names:
-          - 0
-          - 1
         data_split:
           test_pct: 0.2
           train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
@@ -77,35 +71,35 @@ stages:
           test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
     outs:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
-      md5: 945201efae1f89c50a4c3c325853fc49.dir
-      size: 2804818
+      md5: aec21b0f9a77d82b3aa1e88a45d8b5b7.dir
+      size: 2955133
       nfiles: 78
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
-      md5: e074f6b72133fb84ea4a4099431ad50d.dir
-      size: 34264
+      md5: 92a47a0bfebeaa9813818548aea03e3e.dir
+      size: 39362
       nfiles: 78
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
-      md5: 6928706298a6d7ef07013289bd41948f.dir
-      size: 11861699
+      md5: db4f51d18ab93e49665a49ea0682e8da.dir
+      size: 11711384
       nfiles: 314
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
-      md5: 2607e5f281c5037af71d5b28b9f653bd.dir
-      size: 165153
+      md5: 3ad55c909b7e950bd5faca37648d95d8.dir
+      size: 160055
       nfiles: 314
   train:
     cmd: python src/stages/train.py --config=params.yaml
     deps:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
-      md5: 6928706298a6d7ef07013289bd41948f.dir
-      size: 11861699
+      md5: db4f51d18ab93e49665a49ea0682e8da.dir
+      size: 11711384
       nfiles: 314
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
-      md5: 2607e5f281c5037af71d5b28b9f653bd.dir
-      size: 165153
+      md5: 3ad55c909b7e950bd5faca37648d95d8.dir
+      size: 160055
       nfiles: 314
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 0fbfbeb39bc8c13a8c663523a4c2f7db
+      size: 2711
     - path: src/stages/train.py
       md5: a6ec2486d381039eac01b2463dfae760
       size: 1597
@@ -132,31 +126,31 @@ stages:
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: models
-      md5: e68c53794a1fbcf967a067da7b4103ba.dir
+      md5: b1646d6a7376fb92bbd6a2c73e7f73e0.dir
       size: 190185141
       nfiles: 1
     - path: training_metrics
-      md5: ccc588b1adce5fef7427d647fe5e7ddd.dir
-      size: 2270
+      md5: fdda54abf3ade1a584cd8a841a9c3a5d.dir
+      size: 2374
       nfiles: 6
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
-      md5: 945201efae1f89c50a4c3c325853fc49.dir
-      size: 2804818
+      md5: aec21b0f9a77d82b3aa1e88a45d8b5b7.dir
+      size: 2955133
       nfiles: 78
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
-      md5: e074f6b72133fb84ea4a4099431ad50d.dir
-      size: 34264
+      md5: 92a47a0bfebeaa9813818548aea03e3e.dir
+      size: 39362
       nfiles: 78
     - path: models
-      md5: e68c53794a1fbcf967a067da7b4103ba.dir
+      md5: b1646d6a7376fb92bbd6a2c73e7f73e0.dir
       size: 190185141
       nfiles: 1
     - path: requirements.txt
-      md5: 7edda101df092201b03b26a2b476e7c4
-      size: 3445
+      md5: 0fbfbeb39bc8c13a8c663523a4c2f7db
+      size: 2711
     - path: src/stages/eval.py
       md5: 4d1ae58faaf33683ce0fbe6563f93878
       size: 1472
@@ -186,5 +180,5 @@ stages:
           model_pickle_fname: model_pickle_fastai.pkl
     outs:
     - path: metrics.json
-      md5: d62c799d50f66150fb5684fc1995527d
-      size: 64
+      md5: 8f9a36cdec542ba6ba31076d240c7ead
+      size: 65
