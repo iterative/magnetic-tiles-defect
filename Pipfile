@@ -16,13 +16,5 @@ python-box = "==6.0.2"
 dvclive = "==0.7.1"
 uvicorn = "==0.15.0"
 
-[dev-packages]
-ipykernel = "*"
-autopep8 = "*"
-pylint = "*"
-bandit = "*"
-ipywidgets = "*"
-notebook = "*"
-
 [requires]
 python_version = "3"
