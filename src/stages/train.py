@@ -10,7 +10,6 @@ def train_and_save_model(params_path):
     random_state = params.base.random_state
     train_img_dir_path = Path(params.data_split.train_img_dir_path)
     train_mask_dir_path = Path(params.data_split.train_mask_dir_path)
-    code_names = params.data_load.code_names
     img_size = params.train.img_size
     valid_pct = params.train.valid_pct
     learning_rate = params.train.learning_rate
@@ -23,7 +22,6 @@ def train_and_save_model(params_path):
     model_pickle_path = (model_pickle_dir_path/model_pickle_fname).absolute()
     train_model(train_img_dir_path=train_img_dir_path,
                 train_mask_dir_path=train_mask_dir_path,
-                code_names=code_names,
                 n_epochs=n_epochs,
                 lr=learning_rate,
                 use_cpu=use_cpu,

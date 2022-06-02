@@ -26,9 +26,6 @@ stages:
           data_dir: data
           orig_dirname: Magnetic-tile-defect-datasets.-master
           new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
-          code_names:
-          - 0
-          - 1
     outs:
     - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/images
       md5: b7178caeac712acf11359c9f183f2cdc.dir
@@ -66,9 +63,6 @@ stages:
           data_dir: data
           orig_dirname: Magnetic-tile-defect-datasets.-master
           new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
-          code_names:
-          - 0
-          - 1
         data_split:
           test_pct: 0.2
           train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images

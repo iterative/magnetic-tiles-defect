@@ -16,7 +16,6 @@ def get_mask_path(img_path, train_mask_dir_path):
 
 def train_model(train_img_dir_path,
                 train_mask_dir_path,
-                code_names,
                 n_epochs,
                 use_cpu,
                 lr,
@@ -35,7 +34,7 @@ def train_model(train_img_dir_path,
         fnames=fpaths,
         label_func=partial(
             get_mask_path, train_mask_dir_path=train_mask_dir_path),
-        codes=code_names,
+        codes=[0, 1],
         bs=batch_size,
         splitter=RandomSplitter(valid_pct=valid_pct, seed=seed),
         item_tfms=Resize(item_tfms_sz),
