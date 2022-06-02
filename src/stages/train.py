@@ -1,5 +1,9 @@
-import argparse
+import sys
 from pathlib import Path
+src_path = Path(__file__).parent.parent.parent.resolve()
+sys.path.append(str(src_path))
+
+import argparse
 
 from src.load_params import load_params
 from src.train_utils import train_model
