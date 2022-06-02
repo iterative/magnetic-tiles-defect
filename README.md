@@ -82,8 +82,6 @@ A(Successful deployment to dev) --> B(Merge dev into main) --> C(Prod CML workfl
 ```bash
 pipenv shell
 pipenv install
-echo "export PYTHONPATH=$PWD" >> $VIRTUAL_ENV/bin/activate
-source $VIRTUAL_ENV/bin/activate
 ```
 
 ### Remote storage
