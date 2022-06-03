@@ -1,14 +1,8 @@
 stages:
-  check_packages:
-    cmd: pipenv run pip freeze > requirements.txt
-    always_changed: true
-    outs:
-      - requirements.txt
   data_load:
     cmd: python src/stages/data_load.py --config=params.yaml
     deps:
       - src/stages/data_load.py
-      - requirements.txt
     params:
       - base
       - data_load
@@ -19,7 +13,6 @@ stages:
     cmd: python src/stages/data_split.py --config=params.yaml
     deps:
       - src/stages/data_split.py
-      - requirements.txt
       - ${data_load.data_dir}/${data_load.new_dirname}/images
       - ${data_load.data_dir}/${data_load.new_dirname}/masks
     params:
@@ -37,7 +30,6 @@ stages:
       - ${data_split.train_img_dir_path}
       - ${data_split.train_mask_dir_path}
       - src/stages/train.py
-      - requirements.txt
     params:
       - base
       - data_split
@@ -56,7 +48,6 @@ stages:
       - ${data_split.test_img_dir_path}
       - ${data_split.test_mask_dir_path}
       - src/stages/eval.py
-      - requirements.txt
     params:
       - base
       - train
