@@ -38,7 +38,9 @@ jobs:
       image: iterativeai/cml:0-dvc2-base1
       options: --gpus all
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with: # https://github.com/iterative/cml/issues/880
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
