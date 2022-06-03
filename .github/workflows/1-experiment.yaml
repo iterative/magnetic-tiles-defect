@@ -66,7 +66,7 @@ jobs:
           # Install dependencies
           pipenv install --skip-lock
           pipenv run dvc pull
-          pipenv run dvc repro
+          pipenv run dvc repro -f
 
           # Create CML report
           echo "## Metrics" >> report.md
@@ -75,4 +75,4 @@ jobs:
           for file in $(ls data/test_preds/ |sort -R |tail -20); do
             cml publish data/test_preds/$file --md >> report.md
           done
-          cml send-comment --pr --update report.md
+          cml send-comment --update report.md
