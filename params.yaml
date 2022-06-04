@@ -19,7 +19,7 @@ data_split:
 train:
   img_size: 200
   valid_pct: 0.2
-  learning_rate: 0.005
+  learning_rate: 0.001
   batch_size: 16
   n_epochs: 10
   use_cpu: false
