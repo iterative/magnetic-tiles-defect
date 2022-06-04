@@ -10,7 +10,7 @@ data_load:
   new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
 
 data_split:
-  test_pct: 0.20
+  test_pct: 0.2
   train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
   train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
   test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
@@ -20,7 +20,7 @@ train:
   img_size: 200
   valid_pct: 0.2
   learning_rate: 0.005
-  batch_size: 8
+  batch_size: 16
   n_epochs: 10
   use_cpu: false
   model_pickle_dir_path: models
