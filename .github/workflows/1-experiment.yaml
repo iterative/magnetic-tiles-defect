@@ -67,7 +67,10 @@ jobs:
           pipenv install --skip-lock
           pipenv run dvc pull
           pipenv run dvc repro -f
-
+          pipenv run dvc push
+          git add *
+          git commit -m "dvc pipeline run"
+          git push
           # Create CML report
           echo "## Metrics" >> report.md
           pipenv run dvc metrics show --md >> report.md
