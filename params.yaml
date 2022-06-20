@@ -19,8 +19,8 @@ data_split:
 train:
   img_size: 200
   valid_pct: 0.2
-  learning_rate: 0.005
-  batch_size: 4
+  learning_rate: 0.001
+  batch_size: 8
   n_epochs: 10
   use_cpu: false
   model_pickle_dir_path: models
