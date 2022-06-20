@@ -26,7 +26,7 @@ train:
   model_pickle_dir_path: models
   model_pickle_fname: model_pickle_fastai.pkl
   augmentations: {
-    do_flip: false,
+    do_flip: true,
     flip_vert: false,
     max_rotate: 10.0,
     min_zoom: 1.0,
