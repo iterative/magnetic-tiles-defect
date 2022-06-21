@@ -65,7 +65,7 @@ jobs:
           # Install dependencies
           pipenv install --skip-lock
           pipenv run dvc pull
-          pipenv run dvc exp run
+          pipenv run dvc repro
           pipenv run dvc push
 
           # Create CML report
