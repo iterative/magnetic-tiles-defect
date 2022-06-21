@@ -5,6 +5,7 @@ on:
     branches-ignore: [main, dev]
 jobs:
   deploy-runner:
+    if: "!contains(github.event.head_commit.message, 'CML PR for')"
     runs-on: ubuntu-latest
     environment: cloud
     permissions:
