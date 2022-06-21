@@ -51,6 +51,8 @@ stages:
       - train
       - data_split
       - evaluate
+    outs:
+      - ${data_load.data_dir}/test_preds
     metrics:
       - metrics.json:
           cache: false
