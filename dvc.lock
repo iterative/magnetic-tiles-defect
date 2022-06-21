@@ -103,7 +103,7 @@ stages:
         train:
           img_size: 200
           valid_pct: 0.2
-          learning_rate: 0.001
+          learning_rate: 0.01
           batch_size: 8
           n_epochs: 20
           use_cpu: false
@@ -117,12 +117,12 @@ stages:
             max_zoom: 1.0
     outs:
     - path: models
-      md5: 4a37782ba4bff6c93a522c29c2763fb2.dir
+      md5: 837e1109ea8ef4485f74a42e0400cf22.dir
       size: 190202935
       nfiles: 1
     - path: training_metrics/scalars
-      md5: d8a56a451e09fdd105cd644b6d482efc.dir
-      size: 2099
+      md5: b60ba47cbc4099d40973bd817ebe9ce9.dir
+      size: 2104
       nfiles: 3
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
@@ -136,7 +136,7 @@ stages:
       size: 35550
       nfiles: 78
     - path: models
-      md5: 4a37782ba4bff6c93a522c29c2763fb2.dir
+      md5: 837e1109ea8ef4485f74a42e0400cf22.dir
       size: 190202935
       nfiles: 1
     - path: src/stages/eval.py
@@ -160,7 +160,7 @@ stages:
         train:
           img_size: 200
           valid_pct: 0.2
-          learning_rate: 0.001
+          learning_rate: 0.01
           batch_size: 8
           n_epochs: 20
           use_cpu: false
@@ -174,9 +174,9 @@ stages:
             max_zoom: 1.0
     outs:
     - path: data/test_preds
-      md5: 3e9b959d7a11b13216051d1c8260c04f.dir
-      size: 561245
+      md5: 95f63d80fcdd948b97d50ff981ffb1a2.dir
+      size: 561913
       nfiles: 78
     - path: metrics.json
-      md5: 09448895e70ef782767908f81f5c39ea
+      md5: 654b6efc6acae8d7eab55c921ddefa22
       size: 65
