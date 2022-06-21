@@ -68,7 +68,8 @@ jobs:
           pipenv run dvc pull
           pipenv run dvc repro
           pipenv run dvc push
-
+          # Create a PR 
+          cml pr --squash --auto-merge .
           # Create CML report
           echo "## Metrics" >> report.md
           pipenv run dvc metrics show --md >> report.md
@@ -76,4 +77,4 @@ jobs:
           for file in $(ls data/test_preds/ |sort -R |tail -20); do
             cml publish data/test_preds/$file --md >> report.md
           done
-          cml send-comment report.md
+          cml send-comment --pr --update report.md
