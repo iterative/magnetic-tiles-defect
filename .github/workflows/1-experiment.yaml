@@ -11,7 +11,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v1
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -39,7 +39,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
@@ -74,4 +76,4 @@ jobs:
           for file in $(ls data/test_preds/ |sort -R |tail -20); do
             cml publish data/test_preds/$file --md >> report.md
           done
-          cml send-comment --pr --update report.md
+          cml send-comment report.md
