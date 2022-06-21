@@ -19,19 +19,14 @@ data_split:
 train:
   img_size: 200
   valid_pct: 0.2
-  learning_rate: 0.001
-  batch_size: 8
+  learning_rate: 0.005
+  batch_size: 4
   n_epochs: 20
   use_cpu: false
   model_pickle_dir_path: models
   model_pickle_fname: model_pickle_fastai.pkl
-  augmentations: {
-    do_flip: true,
-    flip_vert: false,
-    max_rotate: 10.0,
-    min_zoom: 1.0,
-    max_zoom: 1.0
-  }
+  augmentations: {do_flip: true, flip_vert: false, max_rotate: 10.0, min_zoom: 1.0,
+    max_zoom: 1.0}
 
 evaluate:
   save_test_preds: true
