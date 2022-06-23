@@ -114,14 +114,14 @@ stages:
             flip_vert: false
             max_rotate: 10.0
             min_zoom: 1.0
-            max_zoom: 1.0
+            max_zoom: 1.2
     outs:
     - path: models
-      md5: 1b0f91238d21a22591b97e0c76df2615.dir
-      size: 173589239
+      md5: 5cd84861e1bd6674268dd263e301ab86.dir
+      size: 173589367
       nfiles: 1
     - path: training_metrics/scalars
-      md5: eafdb978179c57f1cf19a97ab87b8b03.dir
+      md5: 3e682ba76fcbc4b56d3bc38c351a5f1e.dir
       size: 3099
       nfiles: 3
   evaluate:
@@ -136,8 +136,8 @@ stages:
       size: 35550
       nfiles: 78
     - path: models
-      md5: 1b0f91238d21a22591b97e0c76df2615.dir
-      size: 173589239
+      md5: 5cd84861e1bd6674268dd263e301ab86.dir
+      size: 173589367
       nfiles: 1
     - path: src/stages/eval.py
       md5: d0800ec1b970fe8920de5fac9fdca790
@@ -171,12 +171,12 @@ stages:
             flip_vert: false
             max_rotate: 10.0
             min_zoom: 1.0
-            max_zoom: 1.0
+            max_zoom: 1.2
     outs:
     - path: data/test_preds
-      md5: 138c2c675b672405255a7f4a03a52337.dir
-      size: 562725
+      md5: f8b2aa762db8ebe85d23577a7d37d51b.dir
+      size: 563514
       nfiles: 78
     - path: metrics.json
-      md5: a7b6b0025d7bf1f9d13b7e038c4a7a49
+      md5: 4ca5ab987d57f269ce289c130c39d32f
       size: 65
