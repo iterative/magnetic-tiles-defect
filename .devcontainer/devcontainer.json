@@ -4,5 +4,5 @@
       "dockerfile": "Dockerfile"
     },
     "extensions": ["Iterative.dvc"],
-    "postCreateCommand": "pip install --user pipenv; pipenv install"
+    "postCreateCommand": ""
   }
