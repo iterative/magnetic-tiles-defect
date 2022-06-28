@@ -4,5 +4,5 @@
       "dockerfile": "Dockerfile"
     },
     "extensions": ["Iterative.dvc"],
-    "postCreateCommand": "apt install -y nvtop; pip install --user pipenv; pipenv install"
+    "postCreateCommand": "sudo apt install -y nvtop; pip install --user pipenv; pipenv install; pipenv shell"
   }
