@@ -4,5 +4,5 @@
       "dockerfile": "Dockerfile"
     },
     "extensions": ["Iterative.dvc"],
-    "postCreateCommand": "pipenv install --skip-lock"
+    "postCreateCommand": "pip3 install --user -r requirements.txt"
   }

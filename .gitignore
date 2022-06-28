@@ -156,5 +156,4 @@ cython_debug/
 .vscode/
 /data
 /models
-/requirements.txt
 /Pipfile.lock
