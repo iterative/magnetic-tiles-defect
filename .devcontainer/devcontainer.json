@@ -3,5 +3,6 @@
     "build": {
       "dockerfile": "Dockerfile"
     },
-    "extensions": ["ms-python.python","Iterative.dvc"]
+    "extensions": ["ms-python.python","Iterative.dvc"],
+    "postCreateCommand": "python3 -m dvc pull"
   }
