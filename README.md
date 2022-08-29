@@ -13,7 +13,7 @@ https://www.researchgate.net/profile/Congying-Qiu/publication/327701995_Saliency
 
 
 ### The dataset itself is hosted in this repository:
-https://github.com/abin24/Magnetic-tile-defect-datasets. (including the dot)
+[https://github.com/abin24/Magnetic-tile-defect-datasets.](https://github.com/abin24/Magnetic-tile-defect-datasets.)
 
 ## CML-based workflows in GitHub Actions
 For instruction on how to runs things locally, see the "Local development setup" section below.
