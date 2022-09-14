@@ -17,7 +17,7 @@ data_split:
   test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
 
 train:
-  img_size: 200
+  img_size: 224
   valid_pct: 0.2
   learning_rate: 0.01
   batch_size: 4
