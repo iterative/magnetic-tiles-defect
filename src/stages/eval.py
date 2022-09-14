@@ -28,7 +28,8 @@ def evaluate(params):
                           save_test_preds=save_test_preds)
     json.dump(
         obj=metrics,
-        fp=open(metrics_file_path, 'w')
+        fp=open(metrics_file_path, 'w'),
+        indent=4
     )
 
 

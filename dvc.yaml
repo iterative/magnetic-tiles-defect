@@ -40,7 +40,7 @@ stages:
     outs:
       - models/model_pickle_fastai.pkl
     plots:
-      - training_metrics/scalars:
+      - dvclive-metrics/scalars:
           cache: false
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml

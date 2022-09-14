@@ -42,5 +42,5 @@ def train_model(train_img_dir_path,
     if use_cpu:
         dls.device = 'cpu'
     learn = unet_learner(dls, resnet34, lr=lr, metrics=[Dice, JaccardCoeff])
-    learn.fine_tune(n_epochs, cbs=[DvcLiveCallback(path='training_metrics')])
+    learn.fine_tune(n_epochs, cbs=[DvcLiveCallback(path='dvclive-metrics')])
     learn.export(fname=Path(model_pickle_fpath).absolute())
