@@ -1,8 +1,11 @@
 name: Train
 on:
   push:
-    # don't run on `main` and `dev` commits
-    branches-ignore: [main, dev]
+    paths:
+      - "data/**"
+      - "src/**"
+      - "params.yaml"
+      - "dvc.*"
 jobs:
   deploy-runner:
     runs-on: ubuntu-latest
@@ -17,7 +20,7 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
-      - name: deploy
+      - name: cml runner
         env:
           # set these secrets via gh CLI or UI. See also:
           # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
@@ -47,14 +50,10 @@ jobs:
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
-      - name: Setup Git User
+      - name: cml setup
         run: cml ci
         env:
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      - name: Install pipenv
-        run: |
-          pip install pipenv
-          echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
       - name: dvc-repro-cml
         env:
           # set these secrets via gh CLI or UI. See also:
@@ -62,16 +61,19 @@ jobs:
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           # Install dependencies
-          pipenv install --skip-lock
-          pipenv run dvc pull
-          pipenv run dvc exp run
-          pipenv run dvc push
+          pip install -r requirements.txt
+          dvc pull
+          dvc repro
+          dvc push
+          cml pr --squash .
 
-          # Create CML report
+          ### Create CML report ###
           echo "## Metrics" >> report.md
           pipenv run dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
           for file in $(ls data/test_preds/ |sort -R |tail -20); do
             cml publish data/test_preds/$file --md >> report.md
           done
+          #########################
+
           cml send-comment --pr --update report.md

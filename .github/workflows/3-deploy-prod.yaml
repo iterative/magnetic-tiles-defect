@@ -1,7 +1,8 @@
-name: Deploy-prod
+name: deploy-prod
 on:
   push:
-    branches: [main]
+    tags:
+      - "*#prod*"
 jobs:
   pull-model:
     runs-on: ubuntu-latest
@@ -15,33 +16,16 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
-      - name: Install pipenv
-        run: |
-          pip install pipenv
-          echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
-      - name: dvc-pull-model
+      - name: Pull Model
         run: |
-          pipenv install --skip-lock
-          pipenv run dvc pull models/model_pickle_fastai.pkl
-      - uses: actions/upload-artifact@master
-        with:
-          name: model_pickle
-          path: models/model_pickle_fastai.pkl
-
-  deploy-prod-api:
-    needs: pull-model
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@master
-        with:
-          name: model_pickle
-          path: models
-      - uses: akhileshns/heroku-deploy@v3.12.12
+            pip install dvc[s3]
+            dvc pull models/model_pickle_fastai.pkl
+      - name: Deploy      
+        uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh CLI or UI
           heroku_app_name: "demo-api-mag-tiles-prod" # change to a different name (must be unique globally)

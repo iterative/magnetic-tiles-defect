@@ -63,6 +63,7 @@ def get_metrics(test_img_dir_path,
 
     dice_mean = 2. * inter/union if union > 0 else None
     jacc_mean = inter/(union-inter) if union > 0 else None
+    acc_mean = acc/len(test_images)
     return {'dice_mean': dice_mean, 
             'jacc_mean': jacc_mean, 
-            'acc_mean': acc}
+            'acc_mean': acc_mean}
