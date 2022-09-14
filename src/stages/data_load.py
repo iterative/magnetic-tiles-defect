@@ -5,12 +5,11 @@ sys.path.append(str(src_path))
 
 import argparse
 
-from src.data_utils import dataset_prep
-from src.load_params import load_params
+from src.utils.data_utils import dataset_prep
+from src.utils.load_params import load_params
 
 
-def data_load(params_path):
-    params = load_params(params_path)
+def data_load(params):
     dataset_url = params.data_load.dataset_url
     data_dir = Path(params.data_load.data_dir)
     data_dir.mkdir(exist_ok=True)
@@ -26,4 +25,6 @@ if __name__ == '__main__':
     args_parser = argparse.ArgumentParser()
     args_parser.add_argument('--config', dest='config', required=True)
     args = args_parser.parse_args()
-    data_load(params_path=args.config)
+    params_path = args.config
+    params = load_params(params_path)
+    data_load(params)

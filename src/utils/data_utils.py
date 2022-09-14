@@ -1,8 +1,6 @@
 import random
 import shutil
-from io import BytesIO
 from pathlib import Path
-from urllib.request import urlopen
 from zipfile import ZipFile
 
 import numpy as np

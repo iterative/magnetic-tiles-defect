@@ -5,7 +5,7 @@ from dvclive.fastai import DvcLiveCallback
 from fastai.data.all import Normalize, RandomSplitter, get_image_files
 from fastai.vision.all import (Resize, SegmentationDataLoaders, aug_transforms,
                                imagenet_stats, resnet34, unet_learner)
-
+from fastai.metrics import Dice, JaccardCoeff
 
 def get_mask_path(img_path, train_mask_dir_path):
     msk_path = train_mask_dir_path/f'{img_path.stem}.png'
@@ -18,7 +18,7 @@ def train_model(train_img_dir_path,
                 use_cpu,
                 lr,
                 batch_size,
-                model_pickle_path,
+                model_pickle_fpath,
                 valid_pct,
                 img_size,
                 augmentations,
@@ -41,6 +41,6 @@ def train_model(train_img_dir_path,
                     Normalize.from_stats(*imagenet_stats)])
     if use_cpu:
         dls.device = 'cpu'
-    learn = unet_learner(dls, resnet34, lr=lr)
+    learn = unet_learner(dls, resnet34, lr=lr, metrics=[Dice, JaccardCoeff])
     learn.fine_tune(n_epochs, cbs=[DvcLiveCallback(path='training_metrics')])
-    learn.export(fname=Path(model_pickle_path).absolute())
+    learn.export(fname=Path(model_pickle_fpath).absolute())

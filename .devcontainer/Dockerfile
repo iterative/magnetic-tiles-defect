@@ -6,6 +6,4 @@ RUN apt update && apt install -y cmake &&\
 	mkdir -p nvtop/build && cd nvtop/build &&\
 	cmake .. &&\
 	make &&\
-	sudo make install &&\
-	pip3 install --upgrade pip &&\
-	pip3 install -r /tmp/requirements.txt
+	sudo make install

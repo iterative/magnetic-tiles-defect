@@ -5,12 +5,11 @@ sys.path.append(str(src_path))
 
 import argparse
 
-from src.data_utils import create_test_dataset
-from src.load_params import load_params
+from src.utils.data_utils import create_test_dataset
+from src.utils.load_params import load_params
 
 
-def data_split(params_path):
-    params = load_params(params_path)
+def data_split(params):
     random_state = params.base.random_state
     data_dir = Path(params.data_load.data_dir)
     new_dirname = params.data_load.new_dirname
@@ -37,4 +36,6 @@ if __name__ == '__main__':
     args_parser = argparse.ArgumentParser()
     args_parser.add_argument('--config', dest='config', required=True)
     args = args_parser.parse_args()
-    data_split(params_path=args.config)
+    params_path = args.config
+    params = load_params(params_path)
+    data_split(params)
