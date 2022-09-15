@@ -1,0 +1,83 @@
+name: Train
+on:
+  push:
+    paths:
+      - "data/**"
+      - "src/**"
+      - "params.yaml"
+      - "dvc.*"
+jobs:
+  deploy-runner:
+    runs-on: ubuntu-latest
+    environment: cloud
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: iterative/setup-cml@v1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
+      - name: cml runner
+        env:
+          # set these secrets via gh CLI or UI. See also:
+          # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          cml runner \
+              --cloud=aws \
+              --cloud-region=us-east-1 \
+              --cloud-type=g4dn.xlarge \
+              --labels=cml-runner
+  train-model:
+    needs: deploy-runner
+    runs-on: [self-hosted, cml-runner]
+    container:
+      image: iterativeai/cml:0-dvc2-base1
+      options: --gpus all
+    environment: cloud
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
+      - name: cml setup
+        run: cml ci
+        env:
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: dvc-repro-cml
+        env:
+          # set these secrets via gh CLI or UI. See also:
+          # https://cml.dev/doc/self-hosted-runners?tab=GitHub#personal-access-token
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          # Install dependencies
+          pip install -r requirements.txt
+          dvc pull
+          dvc repro
+          dvc push
+          cml pr . || cml pr --squash .
+
+          ### Create CML report ###
+          echo "## Metrics" >> report.md
+          dvc metrics show --md >> report.md
+          echo "## A few random test images" >> report.md
+          for file in $(ls data/test_preds/ |sort -R |tail -10); do
+            cml publish data/test_preds/$file --md >> report.md
+          done
+          #########################
+
+          cml send-comment --pr --update report.md
