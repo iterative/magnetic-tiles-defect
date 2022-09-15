@@ -69,13 +69,13 @@ jobs:
           dvc pull
           dvc repro
           dvc push
-          cml pr --squash .
+          cml pr .
 
           ### Create CML report ###
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
-          for file in $(ls data/test_preds/ |sort -R |tail -20); do
+          for file in $(ls data/test_preds/ |sort -R |tail -10); do
             cml publish data/test_preds/$file --md >> report.md
           done
           #########################
