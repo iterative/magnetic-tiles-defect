@@ -1,13 +1,8 @@
 name: Train
-on:
-  push:
-    paths:
-      - "data/**"
-      - "src/**"
-      - "params.yaml"
-      - "dvc.*"
+on: push
 jobs:
   deploy-runner:
+    if: github.actor == 'iterative-studio[bot]'
     runs-on: ubuntu-latest
     environment: cloud
     permissions:
