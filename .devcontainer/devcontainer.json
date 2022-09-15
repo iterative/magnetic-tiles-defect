@@ -1,0 +1,8 @@
+{
+    "name": "magnetic-tiles-defect",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "extensions": ["ms-python.python","Iterative.dvc"],
+    "postCreateCommand": "pip3 install --upgrade pip; pip3 install --user -r requirements.txt; python3 -m dvc pull"
+  }
