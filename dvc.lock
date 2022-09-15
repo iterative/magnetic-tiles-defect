@@ -112,9 +112,9 @@ stages:
         train:
           img_size: 224
           valid_pct: 0.2
-          learning_rate: 0.001
+          learning_rate: 0.01
           batch_size: 4
-          n_epochs: 15
+          n_epochs: 10
           use_cpu: false
           model_pickle_fpath: models/model_pickle_fastai.pkl
           augmentations:
@@ -125,12 +125,12 @@ stages:
             max_zoom: 1.0
     outs:
     - path: dvclive-metrics/scalars
-      md5: 46f62eac1a954e68bbad6f6086d844d0.dir
-      size: 2734
+      md5: 5ae0aaaff0fd53a07b55004a4237b63c.dir
+      size: 1809
       nfiles: 5
     - path: models/model_pickle_fastai.pkl
-      md5: 53b70410349f208fe1af5c7fd2730439
-      size: 174421369
+      md5: 81c598075223689714502d253524393f
+      size: 174401785
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
@@ -143,8 +143,8 @@ stages:
       size: 41060
       nfiles: 78
     - path: models/model_pickle_fastai.pkl
-      md5: 53b70410349f208fe1af5c7fd2730439
-      size: 174421369
+      md5: 81c598075223689714502d253524393f
+      size: 174401785
     - path: src/stages/eval.py
       md5: 97356f9e1acbe14017023d5e1dc5675f
       size: 1482
@@ -169,9 +169,9 @@ stages:
         train:
           img_size: 224
           valid_pct: 0.2
-          learning_rate: 0.001
+          learning_rate: 0.01
           batch_size: 4
-          n_epochs: 15
+          n_epochs: 10
           use_cpu: false
           model_pickle_fpath: models/model_pickle_fastai.pkl
           augmentations:
@@ -182,5 +182,5 @@ stages:
             max_zoom: 1.0
     outs:
     - path: metrics.json
-      md5: a1c0ccf734952c1f5ffb7400d3e3dea6
+      md5: 3b87ebcd32c67da6b56033a82752b770
       size: 112
