@@ -19,9 +19,9 @@ data_split:
 train:
   img_size: 224
   valid_pct: 0.2
-  learning_rate: 0.001
+  learning_rate: 0.01
   batch_size: 4
-  n_epochs: 15
+  n_epochs: 10
   use_cpu: false
   model_pickle_fpath: models/model_pickle_fastai.pkl
   augmentations: {do_flip: false, flip_vert: false, max_rotate: 10.0, min_zoom: 1.0,
