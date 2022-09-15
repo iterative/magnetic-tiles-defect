@@ -14,7 +14,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: iterative/setup-cml@v1
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -42,7 +42,9 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
