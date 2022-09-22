@@ -6,9 +6,9 @@ on:
       - "src/**"
       - "params.yaml"
       - "dvc.*"
-    tags-ignore:
-      - "*#prod*"
-      - "*#dev*"
+    # tags-ignore:
+    #   - "*#prod*"
+    #   - "*#dev*"
 jobs:
   deploy-runner:
     # if: github.actor == 'iterative-studio[bot]'
