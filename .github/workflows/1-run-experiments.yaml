@@ -1,17 +1,15 @@
 name: Run Experiment
 on:
   push:
+    branches:    
+    - 'exp*'
     paths:
       - "data/**"
       - "src/**"
       - "params.yaml"
       - "dvc.*"
-    tags-ignore:
-      - "*#prod*"
-      - "*#dev*"
 jobs:
   deploy-runner:
-    # if: github.actor == 'iterative-studio[bot]'
     runs-on: ubuntu-latest
     environment: cloud
     permissions:
