@@ -1,0 +1,6 @@
+mag-tiles-segmentation:
+  labels:
+  - cv
+  - segmentation
+  path: models/model_pickle_fastai.pkl
+  type: model
