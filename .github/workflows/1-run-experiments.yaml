@@ -10,7 +10,7 @@ on:
       - '**'
 jobs:
   deploy-runner:
-    if: github.actor == 'iterative-studio[bot]'
+    # if: github.actor == 'iterative-studio[bot]'
     runs-on: ubuntu-latest
     environment: cloud
     permissions:
