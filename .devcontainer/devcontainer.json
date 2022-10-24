@@ -1,19 +1,17 @@
 {
   "name": "magnetic-tiles-defect",
-  "image": "mcr.microsoft.com/devcontainers/python:3",
-  "extensions": [
-    "Iterative.dvc",
-    "ms-python.python",
-    "redhat.vscode-yaml"
-  ],
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
     "ghcr.io/devcontainers/features/nvidia-cuda:1": {
       "installCudnn": true
     }
   },
-  "postCreateCommand": [
-    "sudo apt update -y",
-    "sudo apt install nvtop -y",
-    "pip3 install --user -r requirements.txt"
-  ]
+  "extensions": [
+    "Iterative.dvc",
+    "ms-python.python",
+    "redhat.vscode-yaml"
+  ],
+  "postCreateCommand": "pip3 install --upgrade pip; pip3 install --user -r requirements.txt; python3 -m dvc pull"
 }
