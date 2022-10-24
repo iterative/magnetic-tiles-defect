@@ -1,8 +1,6 @@
 {
   "name": "magnetic-tiles-defect",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu-21.04",
   "features": {
     "ghcr.io/devcontainers/features/nvidia-cuda:1": {
       "installCudnn": true
@@ -13,5 +11,8 @@
     "ms-python.python",
     "redhat.vscode-yaml"
   ],
-  "postCreateCommand": "pip3 install --upgrade pip; pip3 install --user -r requirements.txt; python3 -m dvc pull"
+  "postCreateCommand": [
+    "sudo apt install nvtop;", 
+	  "pip3 install --upgrade pip; pip3 install --user -r requirements.txt; python3 -m dvc pull"
+]
 }
