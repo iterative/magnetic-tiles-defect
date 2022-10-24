@@ -1,3 +1,4 @@
+sudo apt update -y
 sudo apt install -y libdrm-dev libsystemd-dev
 sudo apt install -y cmake libncurses5-dev libncursesw5-dev git
 git clone https://github.com/Syllo/nvtop.git
