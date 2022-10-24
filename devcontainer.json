@@ -1,13 +1,14 @@
 {
     "name": "magnetic-tiles-defect",
-    "build": {
-      "dockerfile": "Dockerfile"
-    },
     "features": {
       "ghcr.io/devcontainers/features/nvidia-cuda:1": { 
         "installCudnn": true
       }
     },  
-    "extensions": ["ms-python.python","Iterative.dvc"],
+    "customizations": {
+      "vscode": {
+        "extensions": ["ms-python.python","Iterative.dvc"]
+      }
+    },
     "postCreateCommand": "pip3 install --upgrade pip; pip3 install --user -r requirements.txt; python3 -m dvc pull"
   }
