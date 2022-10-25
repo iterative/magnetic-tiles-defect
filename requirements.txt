@@ -9,3 +9,4 @@ fastapi[all]
 python-box
 dvclive
 uvicorn
+numpy
