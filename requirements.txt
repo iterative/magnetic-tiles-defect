@@ -7,5 +7,5 @@ pillow
 dvc[s3]
 fastapi[all]
 python-box
-dvclive
+dvclive>=1.0
 uvicorn
