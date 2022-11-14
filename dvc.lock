@@ -1,0 +1,189 @@
+schema: '2.0'
+stages:
+  data_load:
+    cmd: python src/stages/data_load.py --config=params.yaml
+    deps:
+    - path: src/stages/data_load.py
+      md5: 0e7d94ebf056d3219f49ac51a93145c2
+      size: 917
+    - path: src/utils/data_utils.py
+      md5: 0db1c9fb62a1a788678e637c0eb09af4
+      size: 3390
+    params:
+      params.yaml:
+        base:
+          project: defect_detection
+          pkg_list_fname: pkg_list.txt
+          random_state: 0
+        data_load:
+          dataset_url: https://github.com/abin24/Magnetic-tile-defect-datasets./archive/refs/heads/master.zip
+          data_dir: data
+          orig_dirname: Magnetic-tile-defect-datasets.-master
+          new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
+    outs:
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/images
+      md5: b7178caeac712acf11359c9f183f2cdc.dir
+      size: 14666517
+      nfiles: 392
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
+      md5: f92c29262e93249baf066776487c8535.dir
+      size: 199417
+      nfiles: 392
+  data_split:
+    cmd: python src/stages/data_split.py --config=params.yaml
+    deps:
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/images
+      md5: b7178caeac712acf11359c9f183f2cdc.dir
+      size: 14666517
+      nfiles: 392
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/masks
+      md5: f92c29262e93249baf066776487c8535.dir
+      size: 199417
+      nfiles: 392
+    - path: src/stages/data_split.py
+      md5: 5e4fd64bdf78e73c628ad1452c556584
+      size: 1415
+    - path: src/utils/data_utils.py
+      md5: 0db1c9fb62a1a788678e637c0eb09af4
+      size: 3390
+    params:
+      params.yaml:
+        base:
+          project: defect_detection
+          pkg_list_fname: pkg_list.txt
+          random_state: 0
+        data_load:
+          dataset_url: https://github.com/abin24/Magnetic-tile-defect-datasets./archive/refs/heads/master.zip
+          data_dir: data
+          orig_dirname: Magnetic-tile-defect-datasets.-master
+          new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
+        data_split:
+          test_pct: 0.2
+          train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
+          train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+          test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
+          test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+    outs:
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
+      md5: 2052af64848d11ce62c4bf778eb73028.dir
+      size: 2922595
+      nfiles: 78
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+      md5: 36c4f7325edf349f9b2a416acf00aa32.dir
+      size: 37791
+      nfiles: 78
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
+      md5: 6fec0ace9aca431036dc85d2d2cc4438.dir
+      size: 11743922
+      nfiles: 314
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+      md5: fde9372f0cb2c91210a8afe82b852025.dir
+      size: 161626
+      nfiles: 314
+  train:
+    cmd: python src/stages/train.py --config=params.yaml
+    deps:
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
+      md5: 6fec0ace9aca431036dc85d2d2cc4438.dir
+      size: 11743922
+      nfiles: 314
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+      md5: fde9372f0cb2c91210a8afe82b852025.dir
+      size: 161626
+      nfiles: 314
+    - path: src/stages/train.py
+      md5: 2a154a0b2d10608e988210bbc6bf590f
+      size: 1550
+    - path: src/utils/train_utils.py
+      md5: 8a667de3ce15bba115f721999c31ab83
+      size: 1709
+    params:
+      params.yaml:
+        base:
+          project: defect_detection
+          pkg_list_fname: pkg_list.txt
+          random_state: 0
+        data_split:
+          test_pct: 0.2
+          train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
+          train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+          test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
+          test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+        train:
+          img_size: 224
+          valid_pct: 0.2
+          learning_rate: 0.01
+          batch_size: 16
+          n_epochs: 15
+          use_cpu: false
+          model_pickle_fpath: models/model_pickle_fastai.pkl
+          augmentations:
+            do_flip: false
+            flip_vert: false
+            max_rotate: 10.0
+            min_zoom: 1.0
+            max_zoom: 1.0
+    outs:
+    - path: models/model_pickle_fastai.pkl
+      md5: 7eb9d80b37d637d7af87a73d982b2f34
+      size: 229772033
+    - path: training/metrics.json
+      md5: e50f3dcacab1755cbbb9eb0a8b4d86ad
+      size: 225
+    - path: training/plots
+      md5: a59ac788b9822ed1d1faed026b23ecb8.dir
+      size: 1457
+      nfiles: 5
+  evaluate:
+    cmd: python src/stages/eval.py --config=params.yaml
+    deps:
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
+      md5: 2052af64848d11ce62c4bf778eb73028.dir
+      size: 2922595
+      nfiles: 78
+    - path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+      md5: 36c4f7325edf349f9b2a416acf00aa32.dir
+      size: 37791
+      nfiles: 78
+    - path: models/model_pickle_fastai.pkl
+      md5: 7eb9d80b37d637d7af87a73d982b2f34
+      size: 229772033
+    - path: src/stages/eval.py
+      md5: 3f4de3de51fe509971183b706c935866
+      size: 1563
+    - path: src/utils/eval_utils.py
+      md5: 8fa6e37eec07910cbc10b49fb69404bb
+      size: 2427
+    params:
+      params.yaml:
+        base:
+          project: defect_detection
+          pkg_list_fname: pkg_list.txt
+          random_state: 0
+        data_split:
+          test_pct: 0.2
+          train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
+          train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
+          test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
+          test_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_masks
+        evaluate:
+          save_test_preds: true
+          metrics_file: evaluation/metrics.json
+        train:
+          img_size: 224
+          valid_pct: 0.2
+          learning_rate: 0.01
+          batch_size: 16
+          n_epochs: 15
+          use_cpu: false
+          model_pickle_fpath: models/model_pickle_fastai.pkl
+          augmentations:
+            do_flip: false
+            flip_vert: false
+            max_rotate: 10.0
+            min_zoom: 1.0
+            max_zoom: 1.0
+    outs:
+    - path: evaluation/metrics.json
+      md5: cfd8fab9ecaf205c24e78c390c4e1398
+      size: 112

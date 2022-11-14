@@ -1,0 +1,11 @@
+torch
+torchvision
+fastai
+fastcore
+tqdm
+pillow
+dvc[s3]
+fastapi[all]
+python-box
+dvclive>=1.0
+uvicorn

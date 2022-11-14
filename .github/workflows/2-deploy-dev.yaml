@@ -1,0 +1,33 @@
+name: Deploy-dev
+on:
+  push:
+    tags:
+      - "*#dev*"
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: cloud
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::342840881361:role/SandboxUser
+      - name: Pull Model
+        run: |
+            pip install dvc[s3]
+            dvc pull models/model_pickle_fastai.pkl
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # set your own via gh CLI or UI
+          heroku_app_name: "demo-api-mag-tiles-dev" # change to a different name (must be unique globally)
+          heroku_email: "alexkim@iterative.ai" # set your email
+          team: "iterative-sandbox" # you don't need this if using a personal account
+          usedocker: true
