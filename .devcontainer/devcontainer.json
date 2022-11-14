@@ -1,6 +1,6 @@
 {
   "name": "magnetic-tiles-defect",
-  "image": "mcr.microsoft.com/devcontainers/python:3",
+  "image": "mcr.microsoft.com/devcontainers/python:3.10",
   "features": {
     "ghcr.io/devcontainers/features/nvidia-cuda:1": {
       "installCudnn": true

@@ -6,3 +6,4 @@ mkdir -p nvtop/build && cd nvtop/build
 cmake .. -DNVIDIA_SUPPORT=ON -DAMDGPU_SUPPORT=ON -DINTEL_SUPPORT=ON
 make
 sudo make install
+rm -rf nvtop/
