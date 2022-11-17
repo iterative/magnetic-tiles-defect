@@ -10,7 +10,7 @@ data_load:
   new_dirname: MAGNETIC_TILE_SURFACE_DEFECTS
 
 data_split:
-  test_pct: 0.20
+  test_pct: 0.2
   train_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_images
   train_mask_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/train_masks
   test_img_dir_path: data/MAGNETIC_TILE_SURFACE_DEFECTS/test_images
@@ -19,13 +19,12 @@ data_split:
 train:
   img_size: 224
   valid_pct: 0.2
-  learning_rate: 0.02
+  learning_rate: 0.05
   batch_size: 16
   n_epochs: 15
   use_cpu: false
   model_pickle_fpath: models/model_pickle_fastai.pkl
-  augmentations: {do_flip: false, flip_vert: false, max_rotate: 10.0, min_zoom: 1.0,
-    max_zoom: 1.0}
+  augmentations: {do_flip: false, flip_vert: false, max_rotate: 10, min_zoom: 1, max_zoom: 1}
 
 evaluate:
   save_test_preds: true
