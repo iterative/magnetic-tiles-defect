@@ -120,20 +120,20 @@ stages:
           augmentations:
             do_flip: false
             flip_vert: false
-            max_rotate: 10.0
+            max_rotate: 20.0
             min_zoom: 1.0
             max_zoom: 1.0
     outs:
     - path: models/model_pickle_fastai.pkl
-      md5: d9072110d859c44603bcd49c1d9a7079
+      md5: 12fd51cdb85275cd685f8d1c366f9d88
       size: 229790017
     - path: training/metrics.json
-      md5: 042e4d51c9ff28f0d2e5b91022e84d6e
-      size: 225
+      md5: e19a500194ffab0bd0dde8b6f67b2433
+      size: 208
     - path: training/plots
-      md5: 75abb93a9c073bcf2e152e907135bbaa.dir
-      size: 2957
-      nfiles: 5
+      md5: b25044b1c9163fba36fbed4ab13bcba7.dir
+      size: 2638
+      nfiles: 4
   evaluate:
     cmd: python src/stages/eval.py --config=params.yaml
     deps:
@@ -146,7 +146,7 @@ stages:
       size: 37791
       nfiles: 78
     - path: models/model_pickle_fastai.pkl
-      md5: d9072110d859c44603bcd49c1d9a7079
+      md5: 12fd51cdb85275cd685f8d1c366f9d88
       size: 229790017
     - path: src/stages/eval.py
       md5: 3f4de3de51fe509971183b706c935866
@@ -180,10 +180,10 @@ stages:
           augmentations:
             do_flip: false
             flip_vert: false
-            max_rotate: 10.0
+            max_rotate: 20.0
             min_zoom: 1.0
             max_zoom: 1.0
     outs:
     - path: evaluation/metrics.json
-      md5: dd58b06cb165f225d91446342356ab35
+      md5: f7ebfc0bdb46f9032731d5dd72a779b8
       size: 111
