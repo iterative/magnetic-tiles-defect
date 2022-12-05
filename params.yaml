@@ -24,7 +24,7 @@ train:
   n_epochs: 30
   use_cpu: false
   model_pickle_fpath: models/model_pickle_fastai.pkl
-  augmentations: {do_flip: false, flip_vert: false, max_rotate: 10.0, min_zoom: 1.0,
+  augmentations: {do_flip: false, flip_vert: false, max_rotate: 20.0, min_zoom: 1.0,
     max_zoom: 1.0}
 
 evaluate:
