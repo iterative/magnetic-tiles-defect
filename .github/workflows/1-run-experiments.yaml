@@ -84,4 +84,4 @@ jobs:
           done
           #########################
 
-          cml comment create --pr --update report.md
+          cml comment create --target=pr --update report.md
