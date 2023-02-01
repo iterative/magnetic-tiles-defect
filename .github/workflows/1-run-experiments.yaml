@@ -1,5 +1,6 @@
 name: Run Experiment
 on:
+  workflow_dispatch: {}
   push:
     branches:    
       - 'exp*'
@@ -13,8 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: cloud
     permissions:
-      contents: read
+      contents: write
       id-token: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -47,8 +49,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+        # with:
+          # ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
@@ -71,15 +73,15 @@ jobs:
           dvc pull
           dvc repro
           dvc push
-          cml pr --squash --skip-ci .
+          cml pr --skip-ci .
 
           ### Create CML report ###
           echo "## Metrics" >> report.md
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
           for file in $(ls data/test_preds/ |sort -R |tail -10); do
-            cml publish data/test_preds/$file --md >> report.md
+            cml asset publish data/test_preds/$file --md >> report.md
           done
           #########################
 
-          cml send-comment --pr --update report.md
+          cml comment create --target=pr --update report.md
