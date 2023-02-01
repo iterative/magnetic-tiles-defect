@@ -78,8 +78,8 @@ jobs:
           dvc metrics show --md >> report.md
           echo "## A few random test images" >> report.md
           for file in $(ls data/test_preds/ |sort -R |tail -10); do
-            cml publish data/test_preds/$file --md >> report.md
+            cml asset publish data/test_preds/$file --md >> report.md
           done
           #########################
 
-          cml send-comment --pr --update report.md
+          cml comment create --pr --update report.md
